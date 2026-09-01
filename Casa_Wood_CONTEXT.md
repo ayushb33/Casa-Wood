@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 5 — Lead Management CRM**
+**Phase 6 — Follow-ups & Activities**
 
 ## Overall Status
-**Phase 4 (Product Management) complete. Built core product models and internal dashboard interfaces to manage inventory via Server Actions. Ready for Phase 5 (Lead CRM).**
+**Phase 5 (Lead CRM) complete. Built full pipeline UI, lead detail view with activity timeline, stage-changer, and create-lead form. Dashboard now has sidebar nav. Ready for Phase 6 (Follow-ups).**
 
 ## Last Updated
 **2026-09-01**
@@ -686,13 +686,13 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Lead Tracking Database Schema (already created in Phase 2)
-- [ ] Dashboard Lead Pipeline UI
-- [ ] Lead status transitions and notes
+- [ ] Follow-up scheduling UI
+- [ ] Activity creation form in lead detail
+- [ ] Follow-up reminders
 
 ## Next Immediate Task
 
-**Begin Phase 5: Lead Management CRM.** Build the internal dashboard interfaces for tracking customer enquiries, assigning leads, and viewing pipeline stages.
+**Begin Phase 6: Follow-ups & Activities.** Build the follow-up scheduling interface in the lead detail page and allow staff to log calls, notes, and visits.
 
 # 20. Session Handover Log
 
@@ -899,6 +899,42 @@ Phase 4 — Product Management
 
 **Next Step:**
 - Start Phase 5: Lead Management CRM (Dashboard UI for tracking customer enquiries and pipeline).
+
+### Session — 2026-09-01 (Phase 5)
+
+**Phase Worked On:**
+Phase 5 — Lead Management CRM
+
+**Completed:**
+- Implemented `src/actions/leads.ts` Server Actions: `getLeads`, `getLeadById`, `createLead`, `updateLeadStatus`, `addLeadActivity`.
+- Built the Leads Dashboard list page (`/dashboard/leads`) with pipeline summary cards (New, Interested, Quotation Sent, Won) and a full data table.
+- Built the Create Lead form (`/dashboard/leads/create`) capturing customer name, phone, email, enquiry source, and notes.
+- Built the Lead Detail page (`/dashboard/leads/[id]`) with customer info, a stage-changer pipeline sidebar, an activity timeline, and product interests.
+- Upgraded the Dashboard Layout (`/dashboard/layout.tsx`) with a persistent sidebar navigation (Overview, Products, Leads), user info display, and a sign-out link.
+- Created `scripts/seed-admin.ts` using `tsx` for first-time admin user creation.
+
+**Changed Files:**
+- `src/actions/leads.ts`
+- `src/app/dashboard/leads/page.tsx`
+- `src/app/dashboard/leads/create/page.tsx`
+- `src/app/dashboard/leads/[id]/page.tsx`
+- `src/app/dashboard/layout.tsx`
+- `scripts/seed-admin.ts`
+- `Casa_Wood_CONTEXT.md`
+
+**Database Changes:**
+- None (Schema already defined in Phase 2).
+
+**Important Decisions:**
+- Used native Server Actions + `FormData` for zero client-side JS overhead in the admin.
+- Customer lookup is by phone number to avoid creating duplicates for returning customers.
+- Dashboard layout now has a proper sidebar; the old minimal header has been replaced.
+
+**Known Issues:**
+- `scripts/seed-admin.ts` requires the Next.js dev server to be running before executing, since it calls the live `/api/auth/sign-up/email` endpoint.
+
+**Next Step:**
+- Start Phase 6: Follow-ups & Activities (scheduling future follow-ups, activity creation forms, staff notes).
 
 ---
 
