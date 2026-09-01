@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MoveRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -34,23 +34,27 @@ export default function HomePage() {
             elevate your everyday living.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <Button
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90 text-base h-14 px-8 rounded-none transition-all"
-              asChild
+            <Link
+              href="/collections"
+              className={buttonVariants({
+                size: "lg",
+                className:
+                  "bg-white text-primary hover:bg-white/90 text-base h-14 px-8 rounded-none transition-all",
+              })}
             >
-              <Link href="/collections">
-                Explore Collection <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-transparent text-white border-white hover:bg-white/10 hover:text-white text-base h-14 px-8 rounded-none transition-all"
-              asChild
+              Explore Collection <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+            <Link
+              href="/custom"
+              className={buttonVariants({
+                size: "lg",
+                variant: "outline",
+                className:
+                  "bg-transparent text-white border-white hover:bg-white/10 hover:text-white text-base h-14 px-8 rounded-none transition-all",
+              })}
             >
-              <Link href="/custom">Custom Design</Link>
-            </Button>
+              Custom Design
+            </Link>
           </div>
         </div>
       </section>
@@ -142,14 +146,17 @@ export default function HomePage() {
                 geometry of form and the natural warmth of sustainably sourced
                 solid walnut.
               </p>
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-fit rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background h-12 px-8"
-                asChild
+              <Link
+                href="/collections/artisan"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className:
+                    "w-fit rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background h-12 px-8",
+                })}
               >
-                <Link href="/collections/artisan">Discover the Series</Link>
-              </Button>
+                Discover the Series
+              </Link>
             </div>
           </div>
         </div>
@@ -200,13 +207,16 @@ export default function HomePage() {
             Have a specific vision in mind? Work directly with our design team
             and master craftsmen to bring your unique furniture concepts to life.
           </p>
-          <Button
-            size="lg"
-            className="rounded-none bg-foreground text-background hover:bg-foreground/90 h-14 px-10 text-base"
-            asChild
+          <Link
+            href="/custom"
+            className={buttonVariants({
+              size: "lg",
+              className:
+                "rounded-none bg-foreground text-background hover:bg-foreground/90 h-14 px-10 text-base",
+            })}
           >
-            <Link href="/custom">Start a Custom Request</Link>
-          </Button>
+            Start a Custom Request
+          </Link>
         </div>
       </section>
 
@@ -268,12 +278,23 @@ export default function HomePage() {
               comfort, and consult with our design specialists.
             </p>
             <div className="flex gap-4">
-              <Button variant="outline" className="rounded-none h-12 px-6" asChild>
-                <Link href="/showroom">View Location</Link>
-              </Button>
-              <Button className="rounded-none h-12 px-6" asChild>
-                <Link href="/showroom/book">Book Consultation</Link>
-              </Button>
+              <Link
+                href="/showroom"
+                className={buttonVariants({
+                  variant: "outline",
+                  className: "rounded-none h-12 px-6",
+                })}
+              >
+                View Location
+              </Link>
+              <Link
+                href="/showroom/book"
+                className={buttonVariants({
+                  className: "rounded-none h-12 px-6",
+                })}
+              >
+                Book Consultation
+              </Link>
             </div>
           </div>
           <div className="w-full md:w-1/2 relative h-[400px]">
