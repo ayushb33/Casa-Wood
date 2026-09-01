@@ -342,24 +342,24 @@ The website should make a real furniture business owner think:
 ## Homepage
 
 ### 1. Header
-- [ ] Full Casa Wood logo
-- [ ] Shop/Collections navigation
-- [ ] About
-- [ ] Custom Furniture
-- [ ] Visit Showroom
-- [ ] Search
-- [ ] Wishlist/menu actions
-- [ ] Responsive mobile navigation
+- [x] Full Casa Wood logo
+- [x] Shop/Collections navigation
+- [x] About
+- [x] Custom Furniture
+- [x] Visit Showroom
+- [x] Search
+- [x] Wishlist/menu actions
+- [x] Responsive mobile navigation
 
 ### 2. Hero
 The hero must create immediate visual impact.
 
 Requirements:
-- [ ] Strong furniture/lifestyle imagery
-- [ ] Editorial composition
-- [ ] Powerful short headline
-- [ ] Primary CTA: Explore Collection
-- [ ] Secondary CTA where useful
+- [x] Strong furniture/lifestyle imagery
+- [x] Editorial composition
+- [x] Powerful short headline
+- [x] Primary CTA: Explore Collection
+- [x] Secondary CTA where useful
 - [ ] Avoid generic centered landing-page composition
 
 Possible approaches:
@@ -380,16 +380,16 @@ Examples:
 Use compelling imagery, not a generic icon grid.
 
 ### 4. Editorial Collection
-- [ ] Feature a collection
-- [ ] Strong asymmetric composition
-- [ ] Storytelling copy
-- [ ] Collection CTA
+- [x] Feature a collection
+- [x] Strong asymmetric composition
+- [x] Storytelling copy
+- [x] Collection CTA
 
 ### 5. Featured Products
-- [ ] Visually elegant product cards
-- [ ] Image-first presentation
-- [ ] Wishlist interaction
-- [ ] Product navigation
+- [x] Visually elegant product cards
+- [x] Image-first presentation
+- [x] Wishlist interaction
+- [x] Product navigation
 
 ### 6. Craftsmanship
 Tell a visual story around:
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 3 — Public Casa Wood Website**
+**Phase 4 — Product Management**
 
 ## Overall Status
-**Phase 2 (Authentication & Roles) complete. Database schema created with Prisma 7, adapter-pg installed, migration run. Better Auth configured for dashboard access. Ready for Phase 3 (Public Website).**
+**Phase 3 (Public Website) complete. Built high-end landing page with Hero, Categories, Collections, Craftsmanship, Lookbook, and global layout with Header and Footer. Ready for Phase 4 (Product Management).**
 
 ## Last Updated
 **2026-09-01**
@@ -686,13 +686,13 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Implement Landing Page Hero Section
-- [ ] Build Public Showroom Collections
-- [ ] Polish public UI animations and transitions
+- [ ] Product Management API
+- [ ] Dashboard Product Creation Interface
+- [ ] Product variants and configurations
 
 ## Next Immediate Task
 
-**Begin Phase 3: Public Casa Wood Website.** Build the highly attractive, modern, visually memorable furniture website.
+**Begin Phase 4: Product Management.** Build the core product models and internal dashboard interfaces to manage inventory and configurations.
 ---
 
 # 20. Session Handover Log
@@ -842,6 +842,35 @@ Phase 2 — Authentication & Roles
 
 **Next Step:**
 - Start Phase 3: Public Casa Wood Website (Build a highly attractive, premium showroom website).
+
+### Session — 2026-09-01 (Phase 3)
+
+**Phase Worked On:**
+Phase 3 — Public Casa Wood Website
+
+**Completed:**
+- Implemented global public layout (`src/app/(public)/layout.tsx`) with a responsive header (Logo, navigation links, icons) and a comprehensive multi-column footer.
+- Built a highly attractive, premium homepage (`src/app/(public)/page.tsx`) utilizing high-quality lifestyle furniture imagery.
+- Developed specific sections: Hero (with powerful CTAs), Category Discovery (Shop by Room), Editorial Collection feature, Craftsmanship storytelling, Custom Furniture bespoke CTA, Lookbook/Inspiration grid, and a physical Showroom CTA.
+- Ensured strong typographical hierarchy using `Playfair Display` and `Inter`, and respected the Casa Wood color palette via Tailwind CSS utilities.
+
+**Changed Files:**
+- `src/app/(public)/layout.tsx`
+- `src/app/(public)/page.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Database Changes:**
+- None.
+
+**Important Decisions:**
+- Relied on external Unsplash placeholder imagery for luxurious realism to immediately establish the high-end editorial aesthetic instead of using generic or blank placeholders.
+- Employed overlapping typographic techniques and subtle animations (e.g., image scaling on hover) to increase the premium feel of the design.
+
+**Known Issues:**
+- Image generation tool encountered a 500 server error, so high-quality public domain placeholders (Unsplash) were used. These will need to be replaced by actual Casa Wood product imagery later.
+
+**Next Step:**
+- Start Phase 4: Product Management (Dashboard UI and API for managing furniture inventory).
 
 ---
 
