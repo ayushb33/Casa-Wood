@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 2 — Authentication & Roles**
+**Phase 3 — Public Casa Wood Website**
 
 ## Overall Status
-**Phase 1 (Architecture & Design Foundation) complete. Folder structure, design tokens, typography, and base shadcn/ui components established. Ready for Phase 2 (Authentication).**
+**Phase 2 (Authentication & Roles) complete. Database schema created with Prisma 7, adapter-pg installed, migration run. Better Auth configured for dashboard access. Ready for Phase 3 (Public Website).**
 
 ## Last Updated
 **2026-09-01**
@@ -686,14 +686,13 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Setup Authentication (Better Auth / Auth.js / Clerk)
-- [ ] Define User and Roles schema
-- [ ] Setup database connection with Prisma (using Aiven DB)
+- [ ] Implement Landing Page Hero Section
+- [ ] Build Public Showroom Collections
+- [ ] Polish public UI animations and transitions
 
 ## Next Immediate Task
 
-**Begin Phase 2: Setup database schema (Prisma) and configure Authentication for dashboard access.**
-
+**Begin Phase 3: Public Casa Wood Website.** Build the highly attractive, modern, visually memorable furniture website.
 ---
 
 # 20. Session Handover Log
@@ -799,6 +798,50 @@ Phase 1 — Architecture & Design Foundation
 
 **Next Step:**
 - Start Phase 2: Set up database connection using Prisma and configure Authentication system.
+
+### Session — 2026-09-01 (Phase 2)
+
+**Phase Worked On:**
+Phase 2 — Authentication & Roles
+
+**Completed:**
+- Initialized Prisma 7 with `@prisma/adapter-pg` connecting to Aiven DB.
+- Created `schema.prisma` mapping out the entire Casa Wood domain (Products, Leads, Customers, Quotations, Orders, Wishlists, Custom Requests, Activities) as well as Better Auth tables.
+- Ran first database migration (`phase2_auth_and_domain_schema`).
+- Configured Better Auth in `src/lib/auth.ts` and `src/lib/auth-client.ts`.
+- Implemented `middleware.ts` for route protection and redirection.
+- Built a stylized Login Page at `/login` matching the Casa Wood branding.
+- Established a placeholder Dashboard layout and homepage at `/dashboard`.
+
+**Changed Files:**
+- `prisma/schema.prisma`
+- `prisma7.config.ts`
+- `src/lib/db.ts`
+- `src/lib/auth.ts`
+- `src/lib/auth-client.ts`
+- `src/lib/session.ts`
+- `src/middleware.ts`
+- `src/app/login/page.tsx`
+- `src/app/login/layout.tsx`
+- `src/app/dashboard/layout.tsx`
+- `src/app/dashboard/page.tsx`
+- `.env` & `.env.example`
+- `Casa_Wood_CONTEXT.md`
+
+**Database Changes:**
+- Generated all tables based on `schema.prisma`.
+
+**Important Decisions:**
+- Selected Better Auth as the primary authentication library due to its seamless Prisma integration and native role-based access.
+- Implemented `@prisma/adapter-pg` using a generic Node `Pool` as required by Prisma 7.
+- Defined `NEXT_PUBLIC_BETTER_AUTH_URL` for the client to use.
+- Defined the complete domain architecture in the DB Schema early to avoid disjointed migrations later.
+
+**Known Issues:**
+- None.
+
+**Next Step:**
+- Start Phase 3: Public Casa Wood Website (Build a highly attractive, premium showroom website).
 
 ---
 

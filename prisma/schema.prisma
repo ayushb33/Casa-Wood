@@ -1,0 +1,465 @@
+// Casa Wood — Prisma Schema
+// Stack: Next.js 16, Better Auth, Prisma 7, PostgreSQL (Aiven)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────
+// BETTER AUTH — Required tables
+// ─────────────────────────────────────────────
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Casa Wood roles: ADMIN | STAFF
+  role          UserRole @default(STAFF)
+
+  sessions      Session[]
+  accounts      Account[]
+
+  // Domain relations
+  assignedLeads Lead[]   @relation("AssignedLeads")
+  activities    Activity[]
+  followUps     FollowUp[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  STAFF
+}
+
+enum ProductStatus {
+  ACTIVE
+  ARCHIVED
+  DRAFT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  INTERESTED
+  SHOWROOM_VISIT
+  QUOTATION_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum LeadSource {
+  WEBSITE
+  WHATSAPP
+  WALK_IN
+  QR_CODE
+  REFERRAL
+  SOCIAL_MEDIA
+  OTHER
+}
+
+enum ActivityType {
+  NOTE
+  CALL
+  MEETING
+  EMAIL
+  WHATSAPP
+  FOLLOW_UP
+}
+
+enum CustomRequestStatus {
+  PENDING
+  REVIEWED
+  QUOTED
+  APPROVED
+  REJECTED
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum OrderStatus {
+  CONFIRMED
+  IN_PRODUCTION
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+// ─────────────────────────────────────────────
+// PRODUCT DOMAIN
+// ─────────────────────────────────────────────
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+
+  @@map("category")
+}
+
+model Product {
+  id               String        @id @default(cuid())
+  name             String
+  slug             String        @unique
+  sku              String?       @unique
+  description      String?
+  shortDescription String?
+  status           ProductStatus @default(DRAFT)
+
+  // Pricing
+  priceOnRequest   Boolean       @default(false)
+  price            Float?
+
+  // Physical attributes
+  material         String?
+  dimensions       String?       // e.g. "W120 x D60 x H75 cm"
+  weight           Float?        // kg
+  colours          String[]      // array of available colours/finishes
+
+  // Flags
+  isFeatured       Boolean       @default(false)
+  isCustomizable   Boolean       @default(false)
+
+  // QR
+  qrCode           String?       @unique // stable URL slug for QR code
+
+  // Tags
+  tags             String[]
+
+  categoryId       String?
+  category         Category?     @relation(fields: [categoryId], references: [id])
+
+  images           ProductImage[]
+  wishlistItems    WishlistItem[]
+  leadInterests    LeadProductInterest[]
+  quotationItems   QuotationItem[]
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@map("product")
+}
+
+model ProductImage {
+  id         String   @id @default(cuid())
+  url        String
+  altText    String?
+  sortOrder  Int      @default(0)
+  isPrimary  Boolean  @default(false)
+
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+
+  @@map("product_image")
+}
+
+// ─────────────────────────────────────────────
+// CUSTOMER & LEAD DOMAIN
+// ─────────────────────────────────────────────
+
+model Customer {
+  id          String   @id @default(cuid())
+  name        String
+  email       String?
+  phone       String?
+  address     String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  leads       Lead[]
+  wishlists   Wishlist[]
+  customRequests CustomRequest[]
+
+  @@map("customer")
+}
+
+model Lead {
+  id           String      @id @default(cuid())
+  status       LeadStatus  @default(NEW)
+  source       LeadSource  @default(WEBSITE)
+  notes        String?
+  pipelineValue Float?      // estimated deal value
+
+  customerId   String
+  customer     Customer    @relation(fields: [customerId], references: [id])
+
+  assignedToId String?
+  assignedTo   User?       @relation("AssignedLeads", fields: [assignedToId], references: [id])
+
+  productInterests LeadProductInterest[]
+  activities   Activity[]
+  followUps    FollowUp[]
+  quotations   Quotation[]
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@map("lead")
+}
+
+model LeadProductInterest {
+  id         String   @id @default(cuid())
+  notes      String?
+
+  leadId     String
+  lead       Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+
+  createdAt  DateTime @default(now())
+
+  @@unique([leadId, productId])
+  @@map("lead_product_interest")
+}
+
+// ─────────────────────────────────────────────
+// ACTIVITIES & FOLLOW-UPS
+// ─────────────────────────────────────────────
+
+model Activity {
+  id        String       @id @default(cuid())
+  type      ActivityType
+  title     String
+  body      String?
+  dueAt     DateTime?
+  doneAt    DateTime?
+
+  leadId    String
+  lead      Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User       @relation(fields: [createdById], references: [id])
+
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@map("activity")
+}
+
+model FollowUp {
+  id          String   @id @default(cuid())
+  scheduledAt DateTime
+  completedAt DateTime?
+  notes       String?
+
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("follow_up")
+}
+
+// ─────────────────────────────────────────────
+// WISHLIST
+// ─────────────────────────────────────────────
+
+model Wishlist {
+  id         String         @id @default(cuid())
+  shareToken String?        @unique // for public share link
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  customerId String?
+  customer   Customer?      @relation(fields: [customerId], references: [id])
+
+  items      WishlistItem[]
+
+  @@map("wishlist")
+}
+
+model WishlistItem {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+
+  wishlistId String
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@unique([wishlistId, productId])
+  @@map("wishlist_item")
+}
+
+// ─────────────────────────────────────────────
+// CUSTOM REQUESTS
+// ─────────────────────────────────────────────
+
+model CustomRequest {
+  id               String              @id @default(cuid())
+  status           CustomRequestStatus @default(PENDING)
+  furnitureType    String
+  dimensions       String?
+  materialPreference String?
+  colourPreference String?
+  budget           Float?
+  description      String?
+  referenceImages  String[]            // URLs
+
+  customerId       String?
+  customer         Customer?           @relation(fields: [customerId], references: [id])
+
+  // Contact info for anonymous requests
+  contactName      String?
+  contactEmail     String?
+  contactPhone     String?
+
+  // Optional conversion to lead
+  leadId           String?
+
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  @@map("custom_request")
+}
+
+// ─────────────────────────────────────────────
+// QUOTATIONS
+// ─────────────────────────────────────────────
+
+model Quotation {
+  id         String          @id @default(cuid())
+  status     QuotationStatus @default(DRAFT)
+  reference  String          @unique // e.g. QT-2024-001
+  validUntil DateTime?
+  notes      String?
+  terms      String?
+
+  // Financials
+  subtotal   Float           @default(0)
+  discount   Float           @default(0)  // absolute discount amount
+  tax        Float           @default(0)  // absolute tax amount
+  total      Float           @default(0)
+
+  leadId     String
+  lead       Lead            @relation(fields: [leadId], references: [id])
+
+  items      QuotationItem[]
+
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@map("quotation")
+}
+
+model QuotationItem {
+  id          String   @id @default(cuid())
+  description String
+  quantity    Int      @default(1)
+  unitPrice   Float
+  total       Float
+
+  quotationId String
+  quotation   Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+
+  productId   String?
+  product     Product?  @relation(fields: [productId], references: [id])
+
+  @@map("quotation_item")
+}
+
+// ─────────────────────────────────────────────
+// ORDERS
+// ─────────────────────────────────────────────
+
+model Order {
+  id          String      @id @default(cuid())
+  status      OrderStatus @default(CONFIRMED)
+  reference   String      @unique // e.g. ORD-2024-001
+  notes       String?
+
+  // Payment
+  totalAmount Float
+  paidAmount  Float       @default(0)
+
+  // Delivery
+  deliveryDate DateTime?
+  deliveryAddress String?
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("order")
+}
