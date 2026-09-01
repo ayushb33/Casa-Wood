@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 4 — Product Management**
+**Phase 5 — Lead Management CRM**
 
 ## Overall Status
-**Phase 3 (Public Website) complete. Built high-end landing page with Hero, Categories, Collections, Craftsmanship, Lookbook, and global layout with Header and Footer. Ready for Phase 4 (Product Management).**
+**Phase 4 (Product Management) complete. Built core product models and internal dashboard interfaces to manage inventory via Server Actions. Ready for Phase 5 (Lead CRM).**
 
 ## Last Updated
 **2026-09-01**
@@ -686,14 +686,13 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Product Management API
-- [ ] Dashboard Product Creation Interface
-- [ ] Product variants and configurations
+- [ ] Lead Tracking Database Schema (already created in Phase 2)
+- [ ] Dashboard Lead Pipeline UI
+- [ ] Lead status transitions and notes
 
 ## Next Immediate Task
 
-**Begin Phase 4: Product Management.** Build the core product models and internal dashboard interfaces to manage inventory and configurations.
----
+**Begin Phase 5: Lead Management CRM.** Build the internal dashboard interfaces for tracking customer enquiries, assigning leads, and viewing pipeline stages.
 
 # 20. Session Handover Log
 
@@ -871,6 +870,35 @@ Phase 3 — Public Casa Wood Website
 
 **Next Step:**
 - Start Phase 4: Product Management (Dashboard UI and API for managing furniture inventory).
+
+### Session — 2026-09-01 (Phase 4)
+
+**Phase Worked On:**
+Phase 4 — Product Management
+
+**Completed:**
+- Implemented `src/actions/products.ts` with Next.js Server Actions to securely create, read, and delete products directly from the database using Prisma.
+- Built the Product Management Dashboard list view (`src/app/dashboard/products/page.tsx`) mapping product data to a cleanly styled administrative table.
+- Developed the Product Creation Interface (`src/app/dashboard/products/create/page.tsx`) using standard HTML forms mapped to the Server Actions to capture product names, prices, and descriptions.
+- Set up automatic slug generation based on the product name for URL routing.
+
+**Changed Files:**
+- `src/actions/products.ts`
+- `src/app/dashboard/products/page.tsx`
+- `src/app/dashboard/products/create/page.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Database Changes:**
+- None (Schema already defined in Phase 2).
+
+**Important Decisions:**
+- Relied on native Next.js Server Actions and `FormData` rather than `react-hook-form` to avoid excessive client-side dependency overhead for simple administrative tasks, keeping the dashboard lightning-fast.
+
+**Known Issues:**
+- None.
+
+**Next Step:**
+- Start Phase 5: Lead Management CRM (Dashboard UI for tracking customer enquiries and pipeline).
 
 ---
 
