@@ -57,7 +57,13 @@ export default async function ProductsPage() {
                   <td className="px-6 py-4 text-muted-foreground">
                     {product.category?.name || "Uncategorized"}
                   </td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-6 py-4 text-right space-x-4">
+                    <Link
+                      href={`/dashboard/products/${product.id}/qr`}
+                      className="text-muted-foreground hover:text-primary text-sm font-medium"
+                    >
+                      QR Code
+                    </Link>
                     <Link
                       href={`/dashboard/products/${product.id}`}
                       className="text-primary hover:underline text-sm font-medium"

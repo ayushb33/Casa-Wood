@@ -16,6 +16,18 @@ export async function getProducts() {
   });
 }
 
+export async function getProductById(id: string) {
+  return await db.product.findUnique({
+    where: { id },
+    include: {
+      category: true,
+      images: {
+        orderBy: { sortOrder: 'asc' }
+      }
+    }
+  });
+}
+
 export async function createProduct(formData: FormData) {
   const name = formData.get("name") as string;
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");

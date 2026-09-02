@@ -559,13 +559,13 @@ Alternative terminal state: Lost
 
 # 14. PHASE 7 — WISHLIST & QR
 
-- [ ] Unique QR per product
-- [ ] QR download/print
-- [ ] Stable QR URLs
-- [ ] Wishlist
-- [ ] Shortlist page
-- [ ] Share shortlist
-- [ ] Optional lead capture
+- [x] Unique QR per product
+- [x] QR download/print
+- [x] Stable QR URLs
+- [x] Wishlist
+- [x] Shortlist page
+- [x] Share shortlist
+- [x] Optional lead capture
 
 ---
 
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 7 — Wishlist & QR**
+**Phase 8 — Custom Requests**
 
 ## Overall Status
-**Phase 6 (Follow-ups & Activities) complete. Built follow-up scheduling, dashboard summary, and activity logging features. Ready for Phase 7.**
+**Phase 7 (Wishlist & QR) complete. Built product public page, QR generation, digital wishlist, and lead capture. Ready for Phase 8.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,15 +686,14 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Unique QR per product
-- [ ] Scan to product page
-- [ ] Wishlist generation
-- [ ] Public shareable wishlist link
-- [ ] Wishlist to lead conversion
+- [ ] Furniture type form
+- [ ] Dimensions and Materials
+- [ ] Reference image uploads
+- [ ] Connect request to CRM lead
 
 ## Next Immediate Task
 
-**Begin Phase 7: Wishlist & QR.** Build the QR code generation for products and the frontend wishlist functionality.
+**Begin Phase 8: Custom Requests.** Build the customer-facing form for bespoke furniture requests and the admin interface to manage them.
 
 # 20. Session Handover Log
 
@@ -958,6 +957,32 @@ Phase 6 — Follow-ups & Activities
 
 **Next Step:**
 - Start Phase 7: Wishlist & QR (Unique QR per product, wishlist generation, public shareable link).
+
+### Session — 2026-09-02 (Phase 7)
+
+**Phase Worked On:**
+Phase 7 — Wishlist & QR
+
+**Completed:**
+- Installed `qrcode.react` to generate printable QR codes.
+- Added `/dashboard/products/[id]/qr/page.tsx` for admins to view and print unique QR codes for any product.
+- Built public product page `/product/[id]/page.tsx` that QR codes redirect to.
+- Developed client-side `AddToWishlistButton` leveraging `localStorage` for a frictionless shopping experience.
+- Created public wishlist interface `/wishlist/page.tsx` allowing customers to review their selections and submit a quotation request.
+- Implemented `submitWishlistLead` server action to instantly pipe wishlist submissions directly into the CRM pipeline with `QR_CODE` tracking.
+
+**Changed Files:**
+- `src/app/dashboard/products/[id]/qr/page.tsx` (New)
+- `src/app/product/[id]/page.tsx` (New)
+- `src/app/wishlist/page.tsx` (New)
+- `src/components/wishlist/add-to-wishlist-button.tsx` (New)
+- `src/app/dashboard/products/page.tsx`
+- `src/actions/wishlist.ts` (New)
+- `src/actions/products.ts`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 8: Custom Requests (Furniture type, dimensions, materials, reference image upload, conversion to CRM lead).
 
 ---
 
