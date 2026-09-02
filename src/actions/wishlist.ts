@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { createNotificationForAll } from "./notifications";
 
 export async function submitWishlistLead(formData: FormData, productIds: string[]) {
   const name = formData.get("name") as string;
@@ -67,6 +68,14 @@ export async function submitWishlistLead(formData: FormData, productIds: string[
   }
 
   revalidatePath("/dashboard/leads");
+
+  // Notify all admin/staff
+  await createNotificationForAll(
+    "NEW_WISHLIST",
+    "New Wishlist Submission",
+    `${name} submitted a wishlist with ${productIds.length} item(s). Phone: ${phone}`,
+    `/dashboard/leads/${lead.id}`
+  );
   
   return { success: true };
 }

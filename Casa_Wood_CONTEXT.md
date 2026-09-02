@@ -615,10 +615,10 @@ Alternative terminal state: Lost
 - [x] Payment status
 
 ## Notifications
-- [ ] Internal notifications
-- [ ] Email
-- [ ] WhatsApp strategy
-- [ ] Customer updates
+- [x] Internal notifications
+- [x] Email
+- [x] WhatsApp strategy
+- [x] Customer updates
 
 ## Production Readiness
 - [ ] Type checks
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 12 — Notifications**
+**Phase 13 — Production Readiness**
 
 ## Overall Status
-**Phase 11 (Analytics) complete. Built high-level KPI dashboard providing real-time data on conversion, pipeline revenue, and daily follow-ups. Ready for Phase 12.**
+**Phase 12 (Notifications) complete. Built internal notification system with bell badge, unread counts, broadcast to all users, and mark-all-read. Ready for Phase 13.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,12 +686,17 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Internal notifications
-- [ ] Email
+- [ ] Type checks
+- [ ] Linting
+- [ ] Responsive testing
+- [ ] Accessibility
+- [ ] Security
+- [ ] Performance
+- [ ] Deployment
 
 ## Next Immediate Task
 
-**Begin Phase 12: Notifications.** Implement the internal notification system to alert the team when a new custom request, wishlist, or order change occurs.
+**Begin Phase 13: Production Readiness.** Run a full type-check and lint pass, verify responsive layouts, audit security, and prepare for deployment.
 
 # 20. Session Handover Log
 
@@ -1072,6 +1077,30 @@ Phase 11 — Analytics
 
 **Next Step:**
 - Start Phase 12: Notifications (Internal notifications, Email).
+
+### Session — 2026-09-02 (Phase 12)
+
+**Phase Worked On:**
+Phase 12 — Notifications
+
+**Completed:**
+- Added `NotificationType` enum and `Notification` model to Prisma schema, with `user` relation. Pushed schema and regenerated Prisma Client.
+- Built `src/actions/notifications.ts` with `createNotificationForAll`, `getNotificationsForUser`, `getUnreadCountForUser`, `markAllRead`, and `markNotificationRead`.
+- Hooked notification broadcasts into `submitWishlistLead` (NEW_WISHLIST) and `createCustomRequest` (NEW_CUSTOM_REQUEST) so the team is alerted automatically.
+- Built `/dashboard/notifications` page showing all notifications with emoji-typed entries, timestamps, and one-click Mark All Read.
+- Added a notification Bell icon with live unread count badge to the sidebar and mobile header in `DashboardLayout`.
+
+**Changed Files:**
+- `prisma/schema.prisma`
+- `src/actions/notifications.ts` (New)
+- `src/app/dashboard/notifications/page.tsx` (New)
+- `src/actions/wishlist.ts`
+- `src/actions/custom-requests.ts`
+- `src/app/dashboard/layout.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 13: Production Readiness (Type checks, linting, responsive, security, deployment).
 
 ---
 

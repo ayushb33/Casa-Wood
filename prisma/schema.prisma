@@ -33,6 +33,7 @@ model User {
   assignedLeads Lead[]   @relation("AssignedLeads")
   activities    Activity[]
   followUps     FollowUp[]
+  notifications Notification[]
 
   @@map("user")
 }
@@ -150,6 +151,15 @@ enum OrderStatus {
   READY
   DELIVERED
   CANCELLED
+}
+
+enum NotificationType {
+  NEW_LEAD
+  NEW_CUSTOM_REQUEST
+  NEW_WISHLIST
+  ORDER_STATUS_CHANGE
+  FOLLOW_UP_DUE
+  SYSTEM
 }
 
 // ─────────────────────────────────────────────
@@ -471,4 +481,24 @@ model Order {
   quotation   Quotation?  @relation(fields: [quotationId], references: [id])
 
   @@map("order")
+}
+
+// ─────────────────────────────────────────────
+// NOTIFICATIONS
+// ─────────────────────────────────────────────
+
+model Notification {
+  id        String           @id @default(cuid())
+  type      NotificationType
+  title     String
+  body      String
+  isRead    Boolean          @default(false)
+  link      String?          // e.g. /dashboard/leads/xxx
+
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime         @default(now())
+
+  @@map("notification")
 }

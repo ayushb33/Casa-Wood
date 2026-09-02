@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { createNotificationForAll } from "./notifications";
 
 export async function createCustomRequest(formData: FormData) {
   const furnitureType = formData.get("furnitureType") as string;
@@ -48,6 +49,15 @@ export async function createCustomRequest(formData: FormData) {
   });
 
   revalidatePath("/dashboard/custom-requests");
+
+  // Notify all admin/staff
+  await createNotificationForAll(
+    "NEW_CUSTOM_REQUEST",
+    "New Custom Furniture Request",
+    `${contactName} submitted a custom request for: ${furnitureType}`,
+    "/dashboard/custom-requests"
+  );
+
   return { success: true };
 }
 
