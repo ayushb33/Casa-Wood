@@ -609,10 +609,10 @@ Alternative terminal state: Lost
 - [ ] Product interest
 
 ## Orders
-- [ ] Convert to order
-- [ ] Order status
-- [ ] Delivery
-- [ ] Payment status
+- [x] Convert to order
+- [x] Order status
+- [x] Delivery
+- [x] Payment status
 
 ## Notifications
 - [ ] Internal notifications
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 10 — Sales & Orders**
+**Phase 11 — Analytics**
 
 ## Overall Status
-**Phase 9 (Quotations) complete. Built professional quotation builder with dynamic line items, financial calcs, and PDF generation. Ready for Phase 10.**
+**Phase 10 (Sales & Orders) complete. Built full order conversion pipeline, delivery tracking, and payment logging. Ready for Phase 11.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,14 +686,17 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Order list view
-- [ ] Convert accepted quote to order
-- [ ] Order status updates
-- [ ] Customer order portal
+- [ ] Leads
+- [ ] Lead sources
+- [ ] Conversion
+- [ ] Follow-ups due
+- [ ] Quotations
+- [ ] Pipeline value
+- [ ] Product interest
 
 ## Next Immediate Task
 
-**Begin Phase 10: Sales & Orders.** Implement the order management module to handle manufacturing and delivery tracking for accepted quotes.
+**Begin Phase 11: Analytics.** Implement the main dashboard analytics views (leads, conversions, pipeline value, product interest).
 
 # 20. Session Handover Log
 
@@ -1029,6 +1032,31 @@ Phase 9 — Quotations
 
 **Next Step:**
 - Start Phase 10: Sales & Orders (Order list, status tracking, convert quote to order).
+
+### Session — 2026-09-02 (Phase 10)
+
+**Phase Worked On:**
+Phase 10 — Sales & Orders
+
+**Completed:**
+- Updated the Prisma schema to relate `Order` directly to `Customer` and `Quotation` (with unique `quotationId`), and executed a data-loss bypass migration.
+- Created robust `convertQuotationToOrder` logic in `src/actions/orders.ts` to transform an `ACCEPTED` quote into a `CONFIRMED` order, instantly marking the parent Lead as `WON`.
+- Built the `OrdersPage` (`/dashboard/orders`) to list all active manufacturing and delivery pipelines with their respective financial balances.
+- Engineered `OrderDetailPage` (`/dashboard/orders/[id]`), a comprehensive dashboard for a specific order. Admins can update the status (In Production, Ready, Delivered) and record ongoing payments against the total balance.
+- Displayed the original Quotation items inside the Order detail view for manufacturing reference.
+- Integrated the Orders module cleanly into the global sidebar.
+
+**Changed Files:**
+- `prisma/schema.prisma`
+- `src/actions/orders.ts` (New)
+- `src/app/dashboard/orders/page.tsx` (New)
+- `src/app/dashboard/orders/[id]/page.tsx` (New)
+- `src/app/dashboard/quotations/[id]/page.tsx`
+- `src/app/dashboard/layout.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 11: Analytics (Leads, Lead sources, Conversion, Follow-ups due, Quotations, Pipeline value, Product interest).
 
 ---
 

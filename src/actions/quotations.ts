@@ -104,6 +104,7 @@ export async function getQuotationById(id: string) {
     where: { id },
     include: {
       items: true,
+      order: true,
       lead: {
         include: { customer: true }
       }

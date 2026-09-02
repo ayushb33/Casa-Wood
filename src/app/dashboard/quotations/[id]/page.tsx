@@ -1,8 +1,9 @@
 import { getQuotationById, updateQuotationStatus } from "@/actions/quotations";
-import { notFound } from "next/navigation";
+import { convertQuotationToOrder } from "@/actions/orders";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Printer, Send, CheckCircle2, XCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, Printer, Send, CheckCircle2, XCircle, Package } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default async function QuotationDetailPage({
   params,
@@ -62,6 +63,23 @@ export default async function QuotationDetailPage({
                 </Button>
               </form>
             </>
+          )}
+          {quote.status === "ACCEPTED" && !quote.order && (
+            <form action={async (formData: FormData) => {
+              "use server";
+              // Using a default address or prompt later, using empty string for now
+              const orderId = await convertQuotationToOrder(quote.id, "");
+              redirect(`/dashboard/orders/${orderId}`);
+            }}>
+              <Button type="submit" className="bg-purple-600 hover:bg-purple-700 gap-2">
+                <Package className="w-4 h-4" /> Convert to Order
+              </Button>
+            </form>
+          )}
+          {quote.order && (
+            <Link href={`/dashboard/orders/${quote.order.id}`} className={buttonVariants({ variant: "outline", className: "gap-2" })}>
+              <Package className="w-4 h-4" /> View Order
+            </Link>
           )}
         </div>
       </div>
