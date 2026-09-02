@@ -2,7 +2,6 @@ import { getServerSession } from "@/lib/session";
 import { getDashboardAnalytics } from "@/actions/analytics";
 import { 
   Users, 
-  TrendingUp, 
   CalendarClock, 
   FileText, 
   ShoppingCart,
@@ -20,7 +19,7 @@ export default async function DashboardPage() {
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Dashboard Overview</h1>
         <p className="text-muted-foreground mt-1">
-          Welcome back, <span className="font-medium text-foreground">{session?.user?.name ?? "User"}</span>. Here's what's happening today.
+          Welcome back, <span className="font-medium text-foreground">{session?.user?.name ?? "User"}</span>. Here&apos;s what&apos;s happening today.
         </p>
       </div>
 
@@ -62,7 +61,7 @@ export default async function DashboardPage() {
         {/* Metric 4 */}
         <div className="rounded-xl border bg-card text-card-foreground shadow-sm p-6 space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="tracking-tight text-sm font-medium text-muted-foreground">Today's Tasks</h3>
+            <h3 className="tracking-tight text-sm font-medium text-muted-foreground">Today&apos;s Tasks</h3>
             <CalendarClock className="h-4 w-4 text-orange-500" />
           </div>
           <div className="text-2xl font-bold">{analytics.todayFollowUps}</div>

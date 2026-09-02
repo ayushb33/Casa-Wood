@@ -114,7 +114,15 @@ export default async function FollowUpsPage() {
   );
 }
 
-function FollowUpCard({ followUp, variant }: { followUp: any, variant: 'default' | 'danger' | 'primary' }) {
+type FollowUpItem = {
+  id: string;
+  leadId: string;
+  scheduledAt: Date;
+  notes: string | null;
+  lead: { customer: { name: string } };
+};
+
+function FollowUpCard({ followUp, variant }: { followUp: FollowUpItem, variant: 'default' | 'danger' | 'primary' }) {
   const isDanger = variant === 'danger';
   const isPrimary = variant === 'primary';
 
@@ -130,7 +138,7 @@ function FollowUpCard({ followUp, variant }: { followUp: any, variant: 'default'
           })}
         </p>
         {followUp.notes && (
-          <p className="text-sm text-muted-foreground mt-2 italic border-l-2 pl-2">"{followUp.notes}"</p>
+          <p className="text-sm text-muted-foreground mt-2 italic border-l-2 pl-2">&ldquo;{followUp.notes}&rdquo;</p>
         )}
       </div>
       <div className="flex sm:flex-col items-end gap-2 shrink-0">

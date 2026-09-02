@@ -1,7 +1,6 @@
 import { getQuotations } from "@/actions/quotations";
 import Link from "next/link";
-import { ArrowRight, FileText, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, FileText } from "lucide-react";
 
 export default async function QuotationsPage() {
   const quotations = await getQuotations();

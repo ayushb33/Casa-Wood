@@ -65,9 +65,8 @@ export default async function QuotationDetailPage({
             </>
           )}
           {quote.status === "ACCEPTED" && !quote.order && (
-            <form action={async (formData: FormData) => {
+            <form action={async () => {
               "use server";
-              // Using a default address or prompt later, using empty string for now
               const orderId = await convertQuotationToOrder(quote.id, "");
               redirect(`/dashboard/orders/${orderId}`);
             }}>

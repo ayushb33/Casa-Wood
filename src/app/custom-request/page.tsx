@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Home } from "lucide-react";
+import { CheckCircle2, Home } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,7 +55,7 @@ export default function CustomRequestPage() {
             <div>
               <h1 className="text-3xl font-semibold tracking-tight">Bespoke Furniture Request</h1>
               <p className="text-muted-foreground mt-2">
-                Can't find exactly what you're looking for? Tell us about your dream piece and we'll craft it for you.
+                Can&apos;t find exactly what you&apos;re looking for? Tell us about your dream piece and we&apos;ll craft it for you.
               </p>
             </div>
             

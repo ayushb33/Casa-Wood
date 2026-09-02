@@ -1,7 +1,6 @@
 import { getOrders } from "@/actions/orders";
 import Link from "next/link";
 import { ArrowRight, Package } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default async function OrdersPage() {
   const orders = await getOrders();

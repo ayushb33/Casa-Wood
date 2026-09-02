@@ -3,7 +3,7 @@ import { scheduleFollowUp, completeFollowUp } from "@/actions/follow-ups";
 import { requireAuth } from "@/lib/session";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, CheckCircle2, MessageSquare, PhoneCall } from "lucide-react";
+import { ArrowLeft, Calendar, CheckCircle2 } from "lucide-react";
 import { LeadStatus } from "@/generated/prisma/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -235,7 +235,7 @@ export default async function LeadDetailPage({
                            month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
                         })}
                       </p>
-                      {fu.notes && <p className="text-xs mt-2 italic">"{fu.notes}"</p>}
+                      {fu.notes && <p className="text-xs mt-2 italic">&ldquo;{fu.notes}&rdquo;</p>}
                     </div>
                     <form action={async () => {
                       "use server";

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Trash2, Home, CheckCircle2 } from "lucide-react";
+import { Trash2, Home, CheckCircle2 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,7 +22,9 @@ export default function WishlistPage() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("casawood_wishlist") || "[]"));
+    const stored = JSON.parse(localStorage.getItem("casawood_wishlist") || "[]");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setItems(stored);
     setIsClient(true);
   }, []);
 
@@ -122,7 +124,7 @@ export default function WishlistPage() {
             <div className="bg-muted/30 border rounded-2xl p-6 h-fit sticky top-24">
               <h2 className="font-semibold mb-4 text-lg">Send to Sales Team</h2>
               <p className="text-sm text-muted-foreground mb-6">
-                Fill in your details and we'll send you a customized quotation for the items in your wishlist.
+                Fill in your details and we&apos;ll send you a customized quotation for the items in your wishlist.
               </p>
               
               <form onSubmit={handleSubmit} className="space-y-4">

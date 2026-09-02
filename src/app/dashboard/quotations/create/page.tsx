@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -43,7 +43,7 @@ export default function CreateQuotationPage() {
     }
   };
 
-  const updateItem = (id: string, field: keyof QuoteItem, value: any) => {
+  const updateItem = (id: string, field: keyof QuoteItem, value: string | number) => {
     setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item));
   };
 
@@ -61,8 +61,8 @@ export default function CreateQuotationPage() {
     try {
       const quoteId = await createQuotation(formData);
       router.push(`/dashboard/quotations/${quoteId}`);
-    } catch (err: any) {
-      alert(err.message || "Failed to create quotation");
+    } catch (err: unknown) {
+      alert((err as Error).message || "Failed to create quotation");
       setIsSubmitting(false);
     }
   };
@@ -94,7 +94,7 @@ export default function CreateQuotationPage() {
           <h2 className="text-lg font-semibold">Line Items</h2>
           
           <div className="space-y-4">
-            {items.map((item, index) => (
+            {items.map((item) => (
               <div key={item.id} className="flex gap-4 items-start">
                 <div className="flex-1 space-y-2">
                   <Label>Description</Label>

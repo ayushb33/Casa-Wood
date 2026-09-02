@@ -1,6 +1,5 @@
 import { getProducts } from "@/actions/products";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export default async function ProductsPage() {
   const products = await getProducts();

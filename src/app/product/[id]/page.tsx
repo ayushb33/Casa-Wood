@@ -1,8 +1,7 @@
 import { getProductById } from "@/actions/products";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Check, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import AddToWishlistButton from "@/components/wishlist/add-to-wishlist-button";
 
 export default async function PublicProductPage({
