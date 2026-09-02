@@ -39,32 +39,39 @@ async function main() {
     const existing = await db.user.findUnique({ where: { email: ADMIN_EMAIL } });
     if (existing) {
       console.log("⚠️  User already exists — skipping creation.\n");
-    } else {
-      // Hash password with scrypt (same as Better Auth does internally)
-      const hashed = await hashPassword(ADMIN_PASSWORD);
-
-      // Create the user row
-      const user = await db.user.create({
-        data: {
-          name: ADMIN_NAME,
-          email: ADMIN_EMAIL,
-          emailVerified: true,
-          role: "ADMIN",
-        },
-      });
-
-      // Create the credential account row (Better Auth's credential provider)
-      await db.account.create({
-        data: {
-          userId: user.id,
-          accountId: user.id,
-          providerId: "credential",
-          password: hashed,
-        },
-      });
-
-      console.log("✅  Admin user created successfully!\n");
+      // Delete any stale accounts for this user (e.g. from a previous failed seed)
+      await db.account.deleteMany({ where: { userId: existing?.id ?? "" } });
+      // Delete the stale user too so we recreate cleanly
+      await db.user.delete({ where: { id: existing.id } });
+      console.log("🗑️  Removed stale user+account, recreating...\n");
     }
+
+    // Hash password with scrypt (same as Better Auth does internally)
+    const hashed = await hashPassword(ADMIN_PASSWORD);
+
+    // Create the user row
+    const user = await db.user.create({
+      data: {
+        name: ADMIN_NAME,
+        email: ADMIN_EMAIL,
+        emailVerified: true,
+        role: "ADMIN",
+      },
+    });
+
+    // Create the credential account row
+    // Better Auth v1.7+ checks: providerId="credential", issuer="local:credential", accountId=user.id
+    await db.account.create({
+      data: {
+        userId: user.id,
+        accountId: user.id,
+        providerId: "credential",
+        issuer: "local:credential",   // ← required by Better Auth v1.7+
+        password: hashed,
+      },
+    });
+
+    console.log("✅  Admin user created successfully!\n");
   } finally {
     await db.$disconnect();
     await pool.end();
