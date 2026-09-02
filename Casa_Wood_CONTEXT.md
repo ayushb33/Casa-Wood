@@ -571,14 +571,14 @@ Alternative terminal state: Lost
 
 # 15. PHASE 8 — CUSTOM REQUESTS
 
-- [ ] Furniture type
-- [ ] Dimensions
-- [ ] Material preference
-- [ ] Colour preference
-- [ ] Budget
-- [ ] Description
-- [ ] Reference image
-- [ ] Convert into CRM lead
+- [x] Furniture type
+- [x] Dimensions
+- [x] Material preference
+- [x] Colour preference
+- [x] Budget
+- [x] Description
+- [x] Reference image
+- [x] Convert into CRM lead
 
 ---
 
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 8 — Custom Requests**
+**Phase 9 — Quotations**
 
 ## Overall Status
-**Phase 7 (Wishlist & QR) complete. Built product public page, QR generation, digital wishlist, and lead capture. Ready for Phase 8.**
+**Phase 8 (Custom Requests) complete. Built bespoke furniture public form, admin list view, and conversion to CRM leads. Ready for Phase 9.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,14 +686,15 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Furniture type form
-- [ ] Dimensions and Materials
-- [ ] Reference image uploads
-- [ ] Connect request to CRM lead
+- [ ] Generate quotation form
+- [ ] Add standard items
+- [ ] Add custom items
+- [ ] Financial calculations (discounts, tax)
+- [ ] Export to PDF
 
 ## Next Immediate Task
 
-**Begin Phase 8: Custom Requests.** Build the customer-facing form for bespoke furniture requests and the admin interface to manage them.
+**Begin Phase 9: Quotations.** Build the admin forms to generate professional quotations directly from a Lead profile, including items, discounts, and PDF export logic.
 
 # 20. Session Handover Log
 
@@ -983,6 +984,28 @@ Phase 7 — Wishlist & QR
 
 **Next Step:**
 - Start Phase 8: Custom Requests (Furniture type, dimensions, materials, reference image upload, conversion to CRM lead).
+
+### Session — 2026-09-02 (Phase 8)
+
+**Phase Worked On:**
+Phase 8 — Custom Requests
+
+**Completed:**
+- Developed the `createCustomRequest` and `convertRequestToLead` server actions in `src/actions/custom-requests.ts`.
+- Built the public-facing Bespoke Furniture Request form at `/custom-request` to capture exact customer requirements like dimensions, material, and budget.
+- Added the Admin Custom Requests dashboard view (`/dashboard/custom-requests`) to review incoming inquiries.
+- Implemented a one-click "Convert to Lead" button for admins to seamlessly move a bespoke request into the primary CRM pipeline.
+- Added the module to the dashboard sidebar.
+
+**Changed Files:**
+- `src/actions/custom-requests.ts` (New)
+- `src/app/custom-request/page.tsx` (New)
+- `src/app/dashboard/custom-requests/page.tsx` (New)
+- `src/app/dashboard/layout.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 9: Quotations (Generate quotation form, standard/custom items, financial calculations, export to PDF).
 
 ---
 
