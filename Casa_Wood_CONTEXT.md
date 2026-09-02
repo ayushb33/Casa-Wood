@@ -600,13 +600,13 @@ Alternative terminal state: Lost
 # 17. PHASE 10–13
 
 ## Analytics
-- [ ] Leads
-- [ ] Lead sources
-- [ ] Conversion
-- [ ] Follow-ups due
-- [ ] Quotations
-- [ ] Pipeline value
-- [ ] Product interest
+- [x] Leads
+- [x] Lead sources
+- [x] Conversion
+- [x] Follow-ups due
+- [x] Quotations
+- [x] Pipeline value
+- [x] Product interest
 
 ## Orders
 - [x] Convert to order
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 11 — Analytics**
+**Phase 12 — Notifications**
 
 ## Overall Status
-**Phase 10 (Sales & Orders) complete. Built full order conversion pipeline, delivery tracking, and payment logging. Ready for Phase 11.**
+**Phase 11 (Analytics) complete. Built high-level KPI dashboard providing real-time data on conversion, pipeline revenue, and daily follow-ups. Ready for Phase 12.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,17 +686,12 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Leads
-- [ ] Lead sources
-- [ ] Conversion
-- [ ] Follow-ups due
-- [ ] Quotations
-- [ ] Pipeline value
-- [ ] Product interest
+- [ ] Internal notifications
+- [ ] Email
 
 ## Next Immediate Task
 
-**Begin Phase 11: Analytics.** Implement the main dashboard analytics views (leads, conversions, pipeline value, product interest).
+**Begin Phase 12: Notifications.** Implement the internal notification system to alert the team when a new custom request, wishlist, or order change occurs.
 
 # 20. Session Handover Log
 
@@ -1057,6 +1052,26 @@ Phase 10 — Sales & Orders
 
 **Next Step:**
 - Start Phase 11: Analytics (Leads, Lead sources, Conversion, Follow-ups due, Quotations, Pipeline value, Product interest).
+
+### Session — 2026-09-02 (Phase 11)
+
+**Phase Worked On:**
+Phase 11 — Analytics
+
+**Completed:**
+- Implemented `getDashboardAnalytics` server action to efficiently aggregate multiple KPIs in a single round-trip (e.g. `totalLeads`, `wonLeads`, daily follow-ups, and nested sums for order revenue).
+- Entirely redesigned the `/dashboard` landing page to act as the primary operational command center.
+- Created beautiful visual metric cards (Revenue, Collected, Leads/Conversion, Today's Tasks) using `lucide-react` icons.
+- Added a breakdown list of `Lead Sources` to help marketing track where the best leads are coming from.
+- Implemented "Quick Links" to directly navigate to Leads, Follow-ups, Quotations, and Orders.
+
+**Changed Files:**
+- `src/actions/analytics.ts` (New)
+- `src/app/dashboard/page.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 12: Notifications (Internal notifications, Email).
 
 ---
 
