@@ -69,6 +69,14 @@ export default async function LeadDetailPage({
         >
           {lead.status.replace(/_/g, " ")}
         </span>
+        <div className="ml-auto">
+          <Link
+            href={`/dashboard/quotations/create?leadId=${lead.id}`}
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+          >
+            Create Quotation
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

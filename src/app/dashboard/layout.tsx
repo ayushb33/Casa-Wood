@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { requireAuth } from "@/lib/session";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Package, Users, LogOut, CalendarClock, PenTool } from "lucide-react";
+import { LayoutDashboard, Package, Users, LogOut, CalendarClock, PenTool, FileText } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Dashboard | Casa Wood",
@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/dashboard/leads", label: "Leads", icon: Users },
   { href: "/dashboard/follow-ups", label: "Follow-ups", icon: CalendarClock },
   { href: "/dashboard/custom-requests", label: "Custom Requests", icon: PenTool },
+  { href: "/dashboard/quotations", label: "Quotations", icon: FileText },
 ];
 
 export default async function DashboardLayout({
