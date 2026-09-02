@@ -584,16 +584,16 @@ Alternative terminal state: Lost
 
 # 16. PHASE 9 — QUOTATIONS
 
-- [ ] Quotation list
-- [ ] Create quotation
-- [ ] Products
-- [ ] Custom items
-- [ ] Discounts
-- [ ] Taxes
-- [ ] Terms
-- [ ] Validity
-- [ ] Printable view
-- [ ] PDF generation
+- [x] Quotation list
+- [x] Create quotation
+- [x] Products
+- [x] Custom items
+- [x] Discounts
+- [x] Taxes
+- [x] Terms
+- [x] Validity
+- [x] Printable view
+- [x] PDF generation
 
 ---
 
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 9 — Quotations**
+**Phase 10 — Sales & Orders**
 
 ## Overall Status
-**Phase 8 (Custom Requests) complete. Built bespoke furniture public form, admin list view, and conversion to CRM leads. Ready for Phase 9.**
+**Phase 9 (Quotations) complete. Built professional quotation builder with dynamic line items, financial calcs, and PDF generation. Ready for Phase 10.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,15 +686,14 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Generate quotation form
-- [ ] Add standard items
-- [ ] Add custom items
-- [ ] Financial calculations (discounts, tax)
-- [ ] Export to PDF
+- [ ] Order list view
+- [ ] Convert accepted quote to order
+- [ ] Order status updates
+- [ ] Customer order portal
 
 ## Next Immediate Task
 
-**Begin Phase 9: Quotations.** Build the admin forms to generate professional quotations directly from a Lead profile, including items, discounts, and PDF export logic.
+**Begin Phase 10: Sales & Orders.** Implement the order management module to handle manufacturing and delivery tracking for accepted quotes.
 
 # 20. Session Handover Log
 
@@ -1006,6 +1005,30 @@ Phase 8 — Custom Requests
 
 **Next Step:**
 - Start Phase 9: Quotations (Generate quotation form, standard/custom items, financial calculations, export to PDF).
+
+### Session — 2026-09-02 (Phase 9)
+
+**Phase Worked On:**
+Phase 9 — Quotations
+
+**Completed:**
+- Implemented `createQuotation` and `updateQuotationStatus` in `src/actions/quotations.ts` to handle the business logic of generating quotes.
+- Built a dynamic client-side `CreateQuotationPage` that allows admins to add unlimited standard or custom line items to a quote, with real-time subtotal/discount/tax computation.
+- Engineered a pristine `QuotationDetailPage` functioning as a printable digital invoice, natively supporting browser-based PDF export without reliance on heavy backend PDF generation libraries.
+- Added quotation generation trigger directly into the `Lead` detail interface.
+- Included the central `Quotations` module into the admin sidebar.
+
+**Changed Files:**
+- `src/actions/quotations.ts` (New)
+- `src/app/dashboard/quotations/page.tsx` (New)
+- `src/app/dashboard/quotations/create/page.tsx` (New)
+- `src/app/dashboard/quotations/[id]/page.tsx` (New)
+- `src/app/dashboard/leads/[id]/page.tsx`
+- `src/app/dashboard/layout.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 10: Sales & Orders (Order list, status tracking, convert quote to order).
 
 ---
 
