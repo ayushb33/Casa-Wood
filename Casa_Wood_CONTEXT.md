@@ -546,14 +546,14 @@ Alternative terminal state: Lost
 
 # 13. PHASE 6 — FOLLOW-UPS
 
-- [ ] Activity timeline
-- [ ] Notes
-- [ ] Calls
-- [ ] Meetings
-- [ ] Follow-up scheduling
-- [ ] Today's follow-ups
-- [ ] Overdue follow-ups
-- [ ] Upcoming follow-ups
+- [x] Activity timeline
+- [x] Notes
+- [x] Calls
+- [x] Meetings
+- [x] Follow-up scheduling
+- [x] Today's follow-ups
+- [x] Overdue follow-ups
+- [x] Upcoming follow-ups
 
 ---
 
@@ -661,10 +661,10 @@ Alternative terminal state: Lost
 # 19. Current Project Status
 
 ## Current Phase
-**Phase 6 — Follow-ups & Activities**
+**Phase 7 — Wishlist & QR**
 
 ## Overall Status
-**Phase 5 (Lead CRM) complete. Built full pipeline UI, lead detail view with activity timeline, stage-changer, and create-lead form. Dashboard now has sidebar nav. Ready for Phase 6 (Follow-ups).**
+**Phase 6 (Follow-ups & Activities) complete. Built follow-up scheduling, dashboard summary, and activity logging features. Ready for Phase 7.**
 
 ## Last Updated
 **2026-09-01**
@@ -686,13 +686,15 @@ Alternative terminal state: Lost
 - [x] Initialize shadcn/ui and add base components
 
 ## In Progress
-- [ ] Follow-up scheduling UI
-- [ ] Activity creation form in lead detail
-- [ ] Follow-up reminders
+- [ ] Unique QR per product
+- [ ] Scan to product page
+- [ ] Wishlist generation
+- [ ] Public shareable wishlist link
+- [ ] Wishlist to lead conversion
 
 ## Next Immediate Task
 
-**Begin Phase 6: Follow-ups & Activities.** Build the follow-up scheduling interface in the lead detail page and allow staff to log calls, notes, and visits.
+**Begin Phase 7: Wishlist & QR.** Build the QR code generation for products and the frontend wishlist functionality.
 
 # 20. Session Handover Log
 
@@ -935,6 +937,27 @@ Phase 5 — Lead Management CRM
 
 **Next Step:**
 - Start Phase 6: Follow-ups & Activities (scheduling future follow-ups, activity creation forms, staff notes).
+
+### Session — 2026-09-02 (Phase 6)
+
+**Phase Worked On:**
+Phase 6 — Follow-ups & Activities
+
+**Completed:**
+- Created `src/actions/follow-ups.ts` to manage follow-up scheduling and retrieval.
+- Developed the Follow-Ups Dashboard (`/dashboard/follow-ups/page.tsx`) displaying Overdue, Today, and Upcoming tasks.
+- Enhanced the Lead Detail page (`/dashboard/leads/[id]/page.tsx`) with forms to log activities (Notes, Calls, Meetings) and schedule new follow-ups.
+- Added Follow-ups link to the main dashboard sidebar navigation.
+
+**Changed Files:**
+- `src/actions/follow-ups.ts`
+- `src/app/dashboard/follow-ups/page.tsx`
+- `src/app/dashboard/leads/[id]/page.tsx`
+- `src/app/dashboard/layout.tsx`
+- `Casa_Wood_CONTEXT.md`
+
+**Next Step:**
+- Start Phase 7: Wishlist & QR (Unique QR per product, wishlist generation, public shareable link).
 
 ---
 

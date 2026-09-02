@@ -1,8 +1,12 @@
-import { getLeadById, updateLeadStatus } from "@/actions/leads";
+import { getLeadById, updateLeadStatus, addLeadActivity } from "@/actions/leads";
+import { scheduleFollowUp, completeFollowUp } from "@/actions/follow-ups";
+import { requireAuth } from "@/lib/session";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Calendar, CheckCircle2, MessageSquare, PhoneCall } from "lucide-react";
 import { LeadStatus } from "@/generated/prisma/client";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const STATUS_BADGE: Record<string, string> = {
   NEW: "bg-blue-100 text-blue-700",
@@ -34,6 +38,8 @@ export default async function LeadDetailPage({
   const { id } = await params;
   const lead = await getLeadById(id);
   if (!lead) notFound();
+
+  const { user } = await requireAuth();
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -132,6 +138,43 @@ export default async function LeadDetailPage({
               </ol>
             )}
           </div>
+          
+          {/* Log Activity Form */}
+          <div className="border rounded-lg bg-background p-6 shadow-sm">
+            <h2 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground mb-4">
+              Log Activity
+            </h2>
+            <form action={async (formData) => {
+              "use server";
+              formData.append("leadId", id);
+              formData.append("createdById", user.id);
+              await addLeadActivity(formData);
+            }} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                 <div className="space-y-2">
+                    <Label htmlFor="type">Type</Label>
+                    <select id="type" name="type" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                       <option value="NOTE">Note</option>
+                       <option value="CALL">Call</option>
+                       <option value="MEETING">Meeting</option>
+                    </select>
+                 </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="title">Title</Label>
+                    <Input id="title" name="title" required placeholder="e.g. Discovery Call" />
+                 </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="body">Details</Label>
+                <textarea id="body" name="body" className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm" placeholder="Notes from the interaction..." required></textarea>
+              </div>
+              <div className="flex justify-end">
+                <button type="submit" className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                  Log Activity
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
 
         {/* Right Column — Pipeline Actions */}
@@ -164,6 +207,66 @@ export default async function LeadDetailPage({
                 );
               })}
             </div>
+          </div>
+
+          {/* Follow-ups */}
+          <div className="border rounded-lg bg-background p-6 shadow-sm space-y-6">
+            <h2 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+              Follow-ups
+            </h2>
+
+            {lead.followUps && lead.followUps.filter(f => !f.completedAt).length > 0 && (
+              <div className="space-y-3 mb-6">
+                {lead.followUps.filter(f => !f.completedAt).map(fu => (
+                  <div key={fu.id} className="flex items-start justify-between gap-4 p-3 border rounded-md bg-muted/30">
+                    <div>
+                      <p className="text-sm font-medium">Scheduled for</p>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(fu.scheduledAt).toLocaleString("en-IN", {
+                           month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                        })}
+                      </p>
+                      {fu.notes && <p className="text-xs mt-2 italic">"{fu.notes}"</p>}
+                    </div>
+                    <form action={async () => {
+                      "use server";
+                      await completeFollowUp(fu.id, id);
+                    }}>
+                      <button type="submit" className="text-muted-foreground hover:text-green-600 p-1">
+                        <CheckCircle2 className="w-5 h-5" />
+                      </button>
+                    </form>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <form action={async (formData) => {
+              "use server";
+              formData.append("leadId", id);
+              formData.append("createdById", user.id);
+              await scheduleFollowUp(formData);
+            }} className="space-y-4 border-t pt-4">
+               <p className="text-sm font-medium">Schedule New</p>
+               <div className="grid grid-cols-2 gap-4">
+                 <div className="space-y-2">
+                   <Label htmlFor="date">Date</Label>
+                   <Input id="date" name="date" type="date" required />
+                 </div>
+                 <div className="space-y-2">
+                   <Label htmlFor="time">Time</Label>
+                   <Input id="time" name="time" type="time" required />
+                 </div>
+               </div>
+               <div className="space-y-2">
+                 <Label htmlFor="fu-notes">Notes (optional)</Label>
+                 <Input id="fu-notes" name="notes" placeholder="What to discuss..." />
+               </div>
+               <button type="submit" className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                 Schedule Reminder
+               </button>
+            </form>
           </div>
 
           {/* Product Interests */}

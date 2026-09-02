@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { requireAuth } from "@/lib/session";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Package, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, Users, LogOut, CalendarClock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Dashboard | Casa Wood",
@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/products", label: "Products", icon: Package },
   { href: "/dashboard/leads", label: "Leads", icon: Users },
+  { href: "/dashboard/follow-ups", label: "Follow-ups", icon: CalendarClock },
 ];
 
 export default async function DashboardLayout({
