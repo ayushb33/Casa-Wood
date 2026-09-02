@@ -20,10 +20,10 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/brand/casa-wood-logo.png"
+              src="/brand/casa-wood-symbol.png"
               alt="Casa Wood Logo"
-              width={140}
-              height={40}
+              width={70}
+              height={70}
               className="object-contain"
               priority
             />

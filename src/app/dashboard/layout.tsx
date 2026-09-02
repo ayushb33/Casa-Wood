@@ -36,10 +36,10 @@ export default async function DashboardLayout({
         <div className="h-16 px-6 flex items-center border-b">
           <Link href="/dashboard" className="flex items-center gap-2">
             <Image
-              src="/brand/casa-wood-logo.png"
+              src="/brand/casa-wood-symbol.png"
               alt="Casa Wood"
-              width={110}
-              height={32}
+              width={50}
+              height={50}
               className="object-contain"
             />
           </Link>
