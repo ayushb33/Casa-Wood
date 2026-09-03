@@ -8,8 +8,14 @@ export default function SignOutButton() {
   const router = useRouter();
 
   async function handleSignOut() {
-    await signOut();
-    router.push("/login");
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          window.location.href = "/login";
+        },
+      },
+    });
+    window.location.href = "/login";
   }
 
   return (
