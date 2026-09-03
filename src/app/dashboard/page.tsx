@@ -30,8 +30,8 @@ export default async function DashboardPage() {
             <h3 className="tracking-tight text-sm font-medium text-muted-foreground">Total Revenue</h3>
             <Banknote className="h-4 w-4 text-muted-foreground" />
           </div>
-          <div className="text-2xl font-bold">${analytics.revenue.toLocaleString()}</div>
-          <p className="text-xs text-muted-foreground">Across {analytics.totalOrders} active orders</p>
+          <div className="text-2xl font-bold">${(analytics?.revenue ?? 0).toLocaleString()}</div>
+          <p className="text-xs text-muted-foreground">Across {analytics?.totalOrders ?? 0} active orders</p>
         </div>
 
         {/* Metric 2 */}
@@ -40,9 +40,9 @@ export default async function DashboardPage() {
             <h3 className="tracking-tight text-sm font-medium text-muted-foreground">Amount Collected</h3>
             <Wallet className="h-4 w-4 text-green-600" />
           </div>
-          <div className="text-2xl font-bold">${analytics.collected.toLocaleString()}</div>
+          <div className="text-2xl font-bold">${(analytics?.collected ?? 0).toLocaleString()}</div>
           <p className="text-xs text-muted-foreground">
-             ${(analytics.revenue - analytics.collected).toLocaleString()} outstanding balance
+             ${((analytics?.revenue ?? 0) - (analytics?.collected ?? 0)).toLocaleString()} outstanding balance
           </p>
         </div>
 
@@ -52,9 +52,9 @@ export default async function DashboardPage() {
             <h3 className="tracking-tight text-sm font-medium text-muted-foreground">Total Leads</h3>
             <Users className="h-4 w-4 text-muted-foreground" />
           </div>
-          <div className="text-2xl font-bold">{analytics.totalLeads}</div>
+          <div className="text-2xl font-bold">{analytics?.totalLeads ?? 0}</div>
           <p className="text-xs text-muted-foreground">
-            <span className="text-green-600 font-medium">{analytics.conversionRate.toFixed(1)}%</span> conversion rate
+            <span className="text-green-600 font-medium">{(analytics?.conversionRate ?? 0).toFixed(1)}%</span> conversion rate
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default async function DashboardPage() {
             <h3 className="tracking-tight text-sm font-medium text-muted-foreground">Today&apos;s Tasks</h3>
             <CalendarClock className="h-4 w-4 text-orange-500" />
           </div>
-          <div className="text-2xl font-bold">{analytics.todayFollowUps}</div>
+          <div className="text-2xl font-bold">{analytics?.todayFollowUps ?? 0}</div>
           <p className="text-xs text-muted-foreground">Follow-ups due today</p>
         </div>
       </div>
@@ -72,13 +72,13 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="rounded-xl border bg-card shadow-sm p-6">
           <h2 className="font-semibold mb-4">Lead Sources</h2>
-          {analytics.leadSources.length === 0 ? (
+          {(!analytics?.leadSources || analytics.leadSources.length === 0) ? (
             <p className="text-sm text-muted-foreground">No data available.</p>
           ) : (
             <div className="space-y-4">
               {analytics.leadSources.map(source => (
                 <div key={source.source} className="flex items-center justify-between">
-                  <span className="text-sm font-medium">{source.source.replace("_", " ")}</span>
+                  <span className="text-sm font-medium">{source.source ? source.source.replace("_", " ") : "Direct"}</span>
                   <span className="text-sm text-muted-foreground">{source._count.source} leads</span>
                 </div>
               ))}
