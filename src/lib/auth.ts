@@ -13,14 +13,16 @@ export const auth = betterAuth({
     requireEmailVerification: false,
   },
 
+  // Allow access across multiple devices & origins
+  trustedOrigins: [
+    "https://casa-wood.vercel.app",
+    "http://localhost:3000",
+  ],
+
   // Session configuration
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // refresh every 24 hours
-    cookieCache: {
-      enabled: true,
-      maxAge: 60 * 5, // 5 minutes client-side cache
-    },
   },
 
   // Expose role field on user
