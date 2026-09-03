@@ -2,22 +2,30 @@ import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
+const globalForDb = globalThis as unknown as {
+  prisma?: PrismaClient;
+  pool?: Pool;
 };
 
-// Strip ?sslmode=… from the URL — newer versions of pg treat sslmode=require
-// as verify-full, which rejects Aiven's self-signed CA. We pass ssl explicitly.
 const rawUrl = (process.env.DATABASE_URL ?? "").replace(/[?&]sslmode=[^&]*/g, "");
 
-const pool = new Pool({ connectionString: rawUrl, ssl: { rejectUnauthorized: false } });
+const pool = globalForDb.pool ?? new Pool({
+  connectionString: rawUrl,
+  ssl: { rejectUnauthorized: false },
+  max: 10, // Limit connections per serverless container
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
+});
+
+if (process.env.NODE_ENV !== "production") globalForDb.pool = pool;
+
 const adapter = new PrismaPg(pool);
 
 export const db =
-  globalForPrisma.prisma ??
+  globalForDb.prisma ??
   new PrismaClient({
     adapter,
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+    log: ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+if (process.env.NODE_ENV !== "production") globalForDb.prisma = db;
