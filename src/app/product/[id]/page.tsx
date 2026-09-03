@@ -1,8 +1,10 @@
 import { getProductById } from "@/actions/products";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import AddToWishlistButton from "@/components/wishlist/add-to-wishlist-button";
+import ProductGallery from "@/components/products/product-gallery";
 
 export default async function PublicProductPage({
   params,
@@ -15,6 +17,8 @@ export default async function PublicProductPage({
   if (!product || product.status !== "ACTIVE") {
     notFound();
   }
+
+  const primaryImage = product.images.find((img) => img.isPrimary) ?? product.images[0];
 
   return (
     <div className="min-h-screen bg-background">
@@ -31,51 +35,53 @@ export default async function PublicProductPage({
 
       <main className="max-w-5xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Image */}
-          <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted">
-            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm">
-              [Product Image Placeholder]
-            </div>
-            {/* If there was an image URL on product, we would render it here */}
-          </div>
+          {/* Gallery */}
+          <ProductGallery
+            images={product.images}
+            productName={product.name}
+          />
 
           {/* Details */}
           <div className="space-y-8 flex flex-col justify-center">
             <div>
-               <p className="text-sm text-muted-foreground uppercase tracking-wider mb-2">
-                  {product.category?.name || "Furniture"}
-               </p>
-               <h1 className="text-4xl font-semibold tracking-tight">{product.name}</h1>
-               <p className="text-2xl mt-4 font-medium">${product.price?.toFixed(2)}</p>
+              <p className="text-sm text-muted-foreground uppercase tracking-wider mb-2">
+                {product.category?.name || "Furniture"}
+              </p>
+              <h1 className="text-4xl font-semibold tracking-tight">{product.name}</h1>
+              <p className="text-2xl mt-4 font-medium">${product.price?.toFixed(2)}</p>
             </div>
 
-            <div className="prose prose-sm text-muted-foreground">
-               <p>{product.description || "No description available."}</p>
+            {product.description && (
+              <div className="text-muted-foreground leading-relaxed">
+                <p>{product.description}</p>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+              {product.dimensions && (
+                <div className="space-y-1">
+                  <h3 className="font-medium text-xs uppercase tracking-wider text-muted-foreground">Dimensions</h3>
+                  <p className="text-sm">{product.dimensions}</p>
+                </div>
+              )}
+              {product.material && (
+                <div className="space-y-1">
+                  <h3 className="font-medium text-xs uppercase tracking-wider text-muted-foreground">Material</h3>
+                  <p className="text-sm">{product.material}</p>
+                </div>
+              )}
             </div>
-            
-            {product.dimensions && (
-               <div className="space-y-2">
-                  <h3 className="font-medium text-sm uppercase tracking-wider">Dimensions</h3>
-                  <p className="text-sm text-muted-foreground">{product.dimensions}</p>
-               </div>
-            )}
-            
-            {product.material && (
-               <div className="space-y-2">
-                  <h3 className="font-medium text-sm uppercase tracking-wider">Material</h3>
-                  <p className="text-sm text-muted-foreground">{product.material}</p>
-               </div>
-            )}
 
             <div className="pt-6 border-t">
-               <AddToWishlistButton 
-                 product={{
-                    id: product.id, 
-                    name: product.name, 
-                    price: product.price ?? 0, 
-                    categoryName: product.category?.name || "Uncategorized"
-                 }} 
-               />
+              <AddToWishlistButton
+                product={{
+                  id: product.id,
+                  name: product.name,
+                  price: product.price ?? 0,
+                  categoryName: product.category?.name || "Uncategorized",
+                  imageUrl: primaryImage?.url,
+                }}
+              />
             </div>
           </div>
         </div>

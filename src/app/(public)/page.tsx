@@ -98,7 +98,7 @@ export default function HomePage() {
             ].map((category, i) => (
               <Link
                 key={i}
-                href={`/collections/${category.title.toLowerCase()}`}
+                href={`/collections?category=${category.title.toLowerCase()}`}
                 className="group relative h-[400px] overflow-hidden bg-muted"
               >
                 <Image

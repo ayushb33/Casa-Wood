@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { requireAuth } from "@/lib/session";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Package, Users, LogOut, CalendarClock, PenTool, FileText, ShoppingCart, Bell } from "lucide-react";
+import { LayoutDashboard, Package, FolderTree, Users, CalendarClock, PenTool, FileText, ShoppingCart, Bell } from "lucide-react";
 import { getUnreadCountForUser } from "@/actions/notifications";
+import SignOutButton from "@/components/auth/sign-out-button";
 
 export const metadata: Metadata = {
   title: "Dashboard | Casa Wood",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 const NAV_LINKS = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/products", label: "Products", icon: Package },
+  { href: "/dashboard/categories", label: "Categories", icon: FolderTree },
   { href: "/dashboard/leads", label: "Leads", icon: Users },
   { href: "/dashboard/follow-ups", label: "Follow-ups", icon: CalendarClock },
   { href: "/dashboard/custom-requests", label: "Custom Requests", icon: PenTool },
@@ -77,13 +79,7 @@ export default async function DashboardLayout({
               </span>
             )}
           </Link>
-          <Link
-            href="/api/auth/sign-out"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-          >
-            <LogOut className="h-4 w-4" />
-            Sign Out
-          </Link>
+          <SignOutButton />
         </div>
       </aside>
 

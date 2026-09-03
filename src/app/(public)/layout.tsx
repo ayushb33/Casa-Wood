@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Heart, User, Menu } from "lucide-react";
+import { Heart, User, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
@@ -34,27 +34,20 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
             <Link href="/collections" className="hover:text-primary transition-colors">
               Collections
             </Link>
-            <Link href="/about" className="hover:text-primary transition-colors">
+            <Link href="/#about" className="hover:text-primary transition-colors">
               Our Story
             </Link>
-            <Link href="/custom" className="hover:text-primary transition-colors">
+            <Link href="/custom-request" className="hover:text-primary transition-colors">
               Custom Furniture
-            </Link>
-            <Link href="/showroom" className="hover:text-primary transition-colors">
-              Visit Showroom
             </Link>
           </nav>
 
           {/* Actions */}
           <div className="flex items-center gap-2 md:gap-4">
-            <Button variant="ghost" size="icon" className="hidden sm:flex">
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
-            <Button variant="ghost" size="icon">
+            <Link href="/wishlist" className="inline-flex items-center justify-center h-10 w-10 rounded-md hover:bg-accent transition-colors">
               <Heart className="h-5 w-5" />
               <span className="sr-only">Wishlist</span>
-            </Button>
+            </Link>
             <Link href="/login">
               <Button variant="ghost" size="icon">
                 <User className="h-5 w-5" />

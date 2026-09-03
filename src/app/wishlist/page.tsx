@@ -13,6 +13,7 @@ type ProductSummary = {
   name: string;
   price: number;
   categoryName: string;
+  imageUrl?: string;
 };
 
 export default function WishlistPage() {
@@ -95,8 +96,18 @@ export default function WishlistPage() {
             <div className="lg:col-span-2 space-y-4">
               {items.map(item => (
                 <div key={item.id} className="flex gap-4 p-4 border rounded-xl items-center">
-                  <div className="w-20 h-20 bg-muted rounded-md shrink-0 flex items-center justify-center text-[10px] text-muted-foreground">
-                    Image
+                  <div className="relative w-20 h-20 bg-muted rounded-md shrink-0 overflow-hidden border">
+                    {item.imageUrl ? (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[10px] text-muted-foreground">
+                        No image
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs text-muted-foreground uppercase">{item.categoryName}</p>

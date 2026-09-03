@@ -2,8 +2,9 @@ import { getQuotationById, updateQuotationStatus } from "@/actions/quotations";
 import { convertQuotationToOrder } from "@/actions/orders";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Printer, Send, CheckCircle2, XCircle, Package } from "lucide-react";
+import { ArrowLeft, Send, CheckCircle2, XCircle, Package } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
+import PrintButton from "@/components/quotations/print-button";
 
 export default async function QuotationDetailPage({
   params,
@@ -180,9 +181,7 @@ export default async function QuotationDetailPage({
       </div>
 
       <div className="flex justify-center print:hidden pt-8 pb-16">
-        <Button onClick={() => window.print()} variant="outline" className="gap-2">
-           <Printer className="w-4 h-4" /> Print / Export to PDF
-        </Button>
+        <PrintButton />
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ export async function submitWishlistLead(formData: FormData, productIds: string[
   const lead = await db.lead.create({
     data: {
       customerId: customer.id,
-      source: "QR_CODE", // Matches LeadSource enum
+      source: "WEBSITE", // Wishlist from website
       status: "NEW",
       notes: notes ? `Wishlist submitted with notes: ${notes}` : "Wishlist submitted.",
     },

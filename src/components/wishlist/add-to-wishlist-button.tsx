@@ -9,6 +9,7 @@ type ProductSummary = {
   name: string;
   price: number;
   categoryName: string;
+  imageUrl?: string;
 };
 
 type WishlistEntry = { id: string };

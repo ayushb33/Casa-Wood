@@ -1144,6 +1144,41 @@ Phase 14 — Handover / Final Review
 **Next Step:**
 - None. Project Complete. 🎉
 
+### Session — 2026-09-03 (Cloudinary Image Uploads)
+
+**Feature Added:**
+Cloudinary Image Upload Integration for Products
+
+**Completed:**
+- Installed `next-cloudinary` and `cloudinary` SDK packages.
+- Added Cloudinary env vars (`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`) to `.env` and `.env.example`.
+- Added `res.cloudinary.com` to Next.js allowed image domains in `next.config.ts`.
+- Created `src/components/products/product-image-uploader.tsx` — a `CldUploadWidget`-powered component with multi-image support, primary image badge, and image removal.
+- Rebuilt `src/actions/products.ts` — full CRUD now includes `createProduct` (with images, category, material, dimensions, status), `updateProduct` (replaces images atomically), `deleteProduct` (cleans up images first), and new `getCategories()`.
+- Rebuilt `src/app/dashboard/products/create/page.tsx` and `create-product-client.tsx` — full create form with Cloudinary image uploader.
+- Created `src/app/dashboard/products/[id]/page.tsx` and `edit-product-client.tsx` — full edit page with image management and delete.
+- Updated `src/app/dashboard/products/page.tsx` — product list now shows thumbnail images and color-coded status badges.
+- Updated `src/app/product/[id]/page.tsx` — public product detail page now renders primary image + thumbnail gallery from Cloudinary.
+- Updated `HANDOVER.md` with Cloudinary setup instructions (upload preset note).
+
+**⚠️ Action Required (Manual):**
+The upload widget requires a Cloudinary **unsigned upload preset** named `casawood_products`. Create it at:
+→ [Cloudinary Dashboard](https://console.cloudinary.com/) → Settings → Upload → Upload Presets → Add Preset → Name: `casawood_products`, Mode: Unsigned.
+
+**Changed Files:**
+- `.env`
+- `.env.example`
+- `next.config.ts`
+- `src/actions/products.ts`
+- `src/components/products/product-image-uploader.tsx` (New)
+- `src/app/dashboard/products/create/page.tsx`
+- `src/app/dashboard/products/create/create-product-client.tsx` (New)
+- `src/app/dashboard/products/[id]/page.tsx` (New)
+- `src/app/dashboard/products/[id]/edit-product-client.tsx` (New)
+- `src/app/dashboard/products/page.tsx`
+- `src/app/product/[id]/page.tsx`
+- `HANDOVER.md`
+
 ---
 
 # 21. Mandatory AI Continuation Protocol

@@ -10,6 +10,7 @@ The application allows customers to browse products, add them to a wishlist, and
 - **Database ORM:** Prisma ORM 7
 - **Database Provider:** PostgreSQL (Hosted on Aiven)
 - **Authentication:** Better Auth (with Role-Based Access Control)
+- **Image Storage:** Cloudinary (via `next-cloudinary` + `cloudinary` SDK)
 - **UI Components:** shadcn/ui & Tailwind CSS
 - **Icons:** lucide-react
 - **Form Handling:** Next.js Server Actions (No external API routes for data mutation)
@@ -17,7 +18,8 @@ The application allows customers to browse products, add them to a wishlist, and
 ## Core Modules & Features
 
 ### 1. Public Storefront
-- **Product Catalogue:** Dynamic fetching of active products directly from the database.
+- **Product Catalogue:** Dynamic fetching of active products directly from the database, displayed with real Cloudinary images.
+- **Product Images:** Admins upload product images via the Cloudinary widget in the dashboard (`/dashboard/products/create` and `/dashboard/products/[id]`). The first image is automatically set as the primary display image.
 - **Wishlist System:** Client-side local storage cart that converts into a qualified CRM lead when submitted.
 - **Custom Requests:** A dedicated form for users to request bespoke furniture, which feeds directly into the admin pipeline.
 
@@ -53,6 +55,9 @@ The application allows customers to browse products, add them to a wishlist, and
    - `DATABASE_URL` (PostgreSQL connection string)
    - `BETTER_AUTH_SECRET` (Generate using `openssl rand -base64 32`)
    - `BETTER_AUTH_URL` (e.g., `http://localhost:3000`)
+   - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` (from your Cloudinary dashboard)
+   - `CLOUDINARY_API_KEY` (from your Cloudinary dashboard)
+   - `CLOUDINARY_API_SECRET` (from your Cloudinary dashboard)
 
 3. **Database Sync:**
    ```bash
@@ -80,6 +85,7 @@ The application is production-ready.
 - **Prisma V7:** This project uses Prisma V7. Be aware of the breaking changes if upgrading or modifying the database adapter. Check the local `skills/prisma-upgrade-v7` markdown if needed.
 - **Server Actions:** Data mutations heavily rely on Next.js Server Actions (`src/actions/*`). Avoid creating standard REST API endpoints in `src/app/api` unless strictly necessary (e.g., webhooks).
 - **Styling:** Stick to the established Tailwind + shadcn/ui pattern. The `globals.css` file contains essential CSS variables for the color palette.
+- **Cloudinary Upload Preset:** The product image uploader uses an **unsigned** Cloudinary upload preset named `casawood_products`. This must be created in the Cloudinary dashboard under **Settings → Upload → Upload Presets**. Set it to "Unsigned", and optionally restrict the upload folder to `casawood/products`.
 
 ---
 *End of Handover Document.*
