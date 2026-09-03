@@ -36,8 +36,8 @@ export const auth = betterAuth({
     },
   },
 
-  secret: process.env.BETTER_AUTH_SECRET,
-  baseURL: process.env.BETTER_AUTH_URL,
+  secret: process.env.BETTER_AUTH_SECRET || "casa-wood-secret-change-me-in-production-openssl-rand-base64-32",
+  baseURL: process.env.BETTER_AUTH_URL || "https://casa-wood.vercel.app",
 });
 
 export type Session = typeof auth.$Infer.Session;
