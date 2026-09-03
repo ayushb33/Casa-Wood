@@ -1,9 +1,10 @@
 import { getCategories } from "@/actions/products";
-import { createCategory, deleteCategory } from "@/actions/categories";
+import { createCategory } from "@/actions/categories";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FolderPlus, Trash2 } from "lucide-react";
+import { FolderPlus } from "lucide-react";
+import DeleteCategoryButton from "@/components/categories/delete-category-button";
 
 export default async function CategoriesPage() {
   const categories = await getCategories();
@@ -73,14 +74,7 @@ export default async function CategoriesPage() {
                       {c.description || "—"}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <form action={async () => {
-                        "use server";
-                        await deleteCategory(c.id);
-                      }}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </form>
+                      <DeleteCategoryButton id={c.id} />
                     </td>
                   </tr>
                 ))
