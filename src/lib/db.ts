@@ -9,15 +9,17 @@ const globalForDb = globalThis as unknown as {
 
 const rawUrl = (process.env.DATABASE_URL ?? "").replace(/[?&]sslmode=[^&]*/g, "");
 
-const pool = globalForDb.pool ?? new Pool({
-  connectionString: rawUrl,
-  ssl: { rejectUnauthorized: false },
-  max: 10, // Limit connections per serverless container
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
-});
+const pool =
+  globalForDb.pool ??
+  new Pool({
+    connectionString: rawUrl,
+    ssl: { rejectUnauthorized: false },
+    max: 1, // Max 1 connection per serverless lambdas to stay under Aiven free tier limits
+    idleTimeoutMillis: 5000,
+    connectionTimeoutMillis: 10000,
+  });
 
-if (process.env.NODE_ENV !== "production") globalForDb.pool = pool;
+globalForDb.pool = pool;
 
 const adapter = new PrismaPg(pool);
 
@@ -28,4 +30,4 @@ export const db =
     log: ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") globalForDb.prisma = db;
+globalForDb.prisma = db;
