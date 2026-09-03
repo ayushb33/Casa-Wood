@@ -15,6 +15,11 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Casa Wood | Premium Furniture Showcase",
   description: "A premium, modern furniture brand and showcase implementation of a Furniture Business Digitalization Platform.",
+  icons: {
+    icon: "/brand/casa-wood-symbol.png",
+    shortcut: "/brand/casa-wood-symbol.png",
+    apple: "/brand/casa-wood-symbol.png",
+  },
 };
 
 export default function RootLayout({
