@@ -35,9 +35,14 @@ export async function getNotificationsForUser(userId: string) {
 }
 
 export async function getUnreadCountForUser(userId: string) {
-  return await db.notification.count({
-    where: { userId, isRead: false }
-  });
+  try {
+    return await db.notification.count({
+      where: { userId, isRead: false }
+    });
+  } catch (error) {
+    console.error("Failed to fetch unread notification count:", error);
+    return 0;
+  }
 }
 
 export async function markAllRead(userId: string) {
