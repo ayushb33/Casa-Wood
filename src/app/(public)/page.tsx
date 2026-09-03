@@ -36,16 +36,13 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <Link
               href="/collections"
-              className={buttonVariants({
-                size: "lg",
-                className:
-                  "bg-white text-primary hover:bg-white/90 text-base h-14 px-8 rounded-none transition-all",
-              })}
+              style={{ color: "#111827", backgroundColor: "#ffffff" }}
+              className="inline-flex items-center justify-center font-semibold hover:bg-white/90 text-base h-14 px-8 rounded-none transition-all shadow-md"
             >
-              Explore Collection <ArrowRight className="ml-2 h-4 w-4" />
+              Explore Collection <ArrowRight className="ml-2 h-4 w-4 text-gray-900" />
             </Link>
             <Link
-              href="/custom"
+              href="/custom-request"
               className={buttonVariants({
                 size: "lg",
                 variant: "outline",
@@ -81,25 +78,33 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
             {[
               {
-                title: "Living",
+                title: "Dining Tables",
+                slug: "dining-tables",
+                img: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800",
+              },
+              {
+                title: "Chairs & Seating",
+                slug: "chairs-seating",
+                img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800",
+              },
+              {
+                title: "Living Room",
+                slug: "living-room",
                 img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
               },
               {
-                title: "Dining",
-                img: "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&q=80&w=800",
-              },
-              {
                 title: "Bedroom",
+                slug: "bedroom",
                 img: "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=800",
               },
             ].map((category, i) => (
               <Link
                 key={i}
-                href={`/collections?category=${category.title.toLowerCase()}`}
-                className="group relative h-[400px] overflow-hidden bg-muted"
+                href={`/collections?category=${category.slug}`}
+                className="group relative h-[360px] overflow-hidden bg-muted rounded-lg"
               >
                 <Image
                   src={category.img}
@@ -147,7 +152,7 @@ export default function HomePage() {
                 solid walnut.
               </p>
               <Link
-                href="/collections/artisan"
+                href="/collections"
                 className={buttonVariants({
                   variant: "outline",
                   size: "lg",
@@ -208,7 +213,7 @@ export default function HomePage() {
             and master craftsmen to bring your unique furniture concepts to life.
           </p>
           <Link
-            href="/custom"
+            href="/custom-request"
             className={buttonVariants({
               size: "lg",
               className:
@@ -255,7 +260,7 @@ export default function HomePage() {
                   Explore curated spaces featuring our latest collections.
                 </p>
                 <Link
-                  href="/journal"
+                  href="/collections"
                   className="text-sm font-medium uppercase tracking-wider hover:text-primary transition-colors flex items-center justify-center"
                 >
                   Get Inspired <MoveRight className="ml-2 h-4 w-4" />
@@ -279,21 +284,21 @@ export default function HomePage() {
             </p>
             <div className="flex gap-4">
               <Link
-                href="/showroom"
+                href="/collections"
                 className={buttonVariants({
                   variant: "outline",
                   className: "rounded-none h-12 px-6",
                 })}
               >
-                View Location
+                Explore Catalogue
               </Link>
               <Link
-                href="/showroom/book"
+                href="/custom-request"
                 className={buttonVariants({
                   className: "rounded-none h-12 px-6",
                 })}
               >
-                Book Consultation
+                Book Custom Consultation
               </Link>
             </div>
           </div>

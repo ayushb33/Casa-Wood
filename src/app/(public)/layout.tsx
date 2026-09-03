@@ -34,7 +34,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
             <Link href="/collections" className="hover:text-primary transition-colors">
               Collections
             </Link>
-            <Link href="/#about" className="hover:text-primary transition-colors">
+            <Link href="/about" className="hover:text-primary transition-colors">
               Our Story
             </Link>
             <Link href="/custom-request" className="hover:text-primary transition-colors">
@@ -80,7 +80,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
               <h4 className="font-semibold text-lg font-serif">Explore</h4>
               <ul className="space-y-2 text-sm text-primary-foreground/80">
                 <li><Link href="/collections" className="hover:text-white transition-colors">All Collections</Link></li>
-                <li><Link href="/custom" className="hover:text-white transition-colors">Custom Designs</Link></li>
+                <li><Link href="/custom-request" className="hover:text-white transition-colors">Custom Designs</Link></li>
                 <li><Link href="/about" className="hover:text-white transition-colors">Our Story</Link></li>
                 <li><Link href="/journal" className="hover:text-white transition-colors">Journal</Link></li>
               </ul>
