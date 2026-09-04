@@ -33,48 +33,49 @@ export default async function DashboardLayout({
   return (
     <div className="flex h-screen bg-muted/20 overflow-hidden">
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 border-r bg-background">
+      <aside className="hidden md:flex flex-col w-64 border-r bg-stone-900 text-stone-200">
         {/* Logo */}
-        <div className="h-16 px-6 flex items-center border-b">
-          <Link href="/dashboard" className="flex items-center gap-2">
+        <div className="h-20 px-6 flex items-center border-b border-stone-800">
+          <Link href="/dashboard" className="flex items-center gap-3 group">
             <Image
               src="/brand/casa-wood-symbol.png"
               alt="Casa Wood"
-              width={50}
-              height={50}
-              className="object-contain"
+              width={42}
+              height={42}
+              className="object-contain transition-transform group-hover:scale-105"
             />
+            <span className="font-serif text-lg font-semibold text-stone-100 tracking-wide">Casa Wood</span>
           </Link>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
           {NAV_LINKS.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-all duration-200"
             >
-              <Icon className="h-4 w-4 shrink-0" />
+              <Icon className="h-4 w-4 shrink-0 text-stone-400" />
               {label}
             </Link>
           ))}
         </nav>
 
         {/* User + Logout */}
-        <div className="border-t p-4 space-y-2">
+        <div className="border-t border-stone-800 p-4 space-y-3 bg-stone-950/40">
           <div className="px-3 py-1">
-            <p className="text-xs font-medium truncate">{user.name}</p>
-            <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+            <p className="text-xs font-semibold text-stone-200 truncate">{user.name}</p>
+            <p className="text-[11px] text-stone-400 truncate">{user.email}</p>
           </div>
           <Link
             href="/dashboard/notifications"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors relative"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors relative"
           >
-            <Bell className="h-4 w-4" />
+            <Bell className="h-4 w-4 text-stone-400" />
             Notifications
             {unreadCount > 0 && (
-              <span className="ml-auto bg-primary text-primary-foreground text-[10px] font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center">
+              <span className="ml-auto bg-amber-600 text-white text-[10px] font-bold rounded-full px-2 py-0.5 min-w-[18px] text-center shadow-xs">
                 {unreadCount > 99 ? "99+" : unreadCount}
               </span>
             )}
