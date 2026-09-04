@@ -97,7 +97,7 @@ export default async function DashboardLayout({
           </Link>
         </header>
 
-        <main className="flex-1 p-6 md:p-8">{children}</main>
+        <main className="flex-1 p-6 md:p-10 w-full min-w-0 max-w-7xl mx-auto">{children}</main>
       </div>
     </div>
   );

@@ -8,12 +8,12 @@ export default async function FollowUpsPage() {
   const totalActive = overdue.length + today.length + upcoming.length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full animate-in fade-in-50 duration-500">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Follow-Ups</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-3xl font-serif font-semibold tracking-tight">Follow-Up Tasks</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Manage your scheduled calls, visits, and reminders.
           </p>
         </div>
@@ -21,37 +21,37 @@ export default async function FollowUpsPage() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="border rounded-lg bg-background p-4 shadow-sm flex items-center gap-4">
-          <div className="p-3 bg-red-100 text-red-700 rounded-full">
+        <div className="border rounded-2xl bg-card p-5 shadow-sm flex items-center gap-4 border-l-4 border-l-rose-500">
+          <div className="p-3 bg-rose-50 text-rose-600 rounded-xl">
             <CalendarX2 className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Overdue</p>
-            <p className="text-3xl font-semibold mt-1">{overdue.length}</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Overdue</p>
+            <p className="text-3xl font-serif font-semibold text-rose-600 mt-0.5">{overdue.length}</p>
           </div>
         </div>
-        <div className="border rounded-lg bg-background p-4 shadow-sm flex items-center gap-4">
-          <div className="p-3 bg-blue-100 text-blue-700 rounded-full">
+        <div className="border rounded-2xl bg-card p-5 shadow-sm flex items-center gap-4 border-l-4 border-l-blue-500">
+          <div className="p-3 bg-blue-50 text-blue-600 rounded-xl">
             <Clock className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Today</p>
-            <p className="text-3xl font-semibold mt-1">{today.length}</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Today</p>
+            <p className="text-3xl font-serif font-semibold text-blue-600 mt-0.5">{today.length}</p>
           </div>
         </div>
-        <div className="border rounded-lg bg-background p-4 shadow-sm flex items-center gap-4">
-          <div className="p-3 bg-green-100 text-green-700 rounded-full">
+        <div className="border rounded-2xl bg-card p-5 shadow-sm flex items-center gap-4 border-l-4 border-l-emerald-500">
+          <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
             <CalendarIcon className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Upcoming</p>
-            <p className="text-3xl font-semibold mt-1">{upcoming.length}</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Upcoming</p>
+            <p className="text-3xl font-serif font-semibold text-emerald-600 mt-0.5">{upcoming.length}</p>
           </div>
         </div>
-        <div className="border rounded-lg bg-background p-4 shadow-sm flex items-center justify-center">
+        <div className="border rounded-2xl bg-card p-5 shadow-sm flex items-center justify-center border-l-4 border-l-stone-900">
            <div className="text-center">
-             <p className="text-xs text-muted-foreground uppercase tracking-wider">Total Active</p>
-             <p className="text-3xl font-semibold mt-1 text-primary">{totalActive}</p>
+             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Active</p>
+             <p className="text-3xl font-serif font-semibold mt-0.5 text-stone-900">{totalActive}</p>
            </div>
         </div>
       </div>
@@ -61,11 +61,11 @@ export default async function FollowUpsPage() {
         <div className="space-y-8">
           {/* Overdue Section */}
           <section>
-            <h2 className="text-lg font-semibold text-red-600 mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-serif font-semibold text-rose-600 mb-4 flex items-center gap-2">
               <CalendarX2 className="w-5 h-5" /> Overdue
             </h2>
             {overdue.length === 0 ? (
-              <p className="text-sm text-muted-foreground bg-background border p-4 rounded-lg">No overdue follow-ups.</p>
+              <p className="text-sm text-muted-foreground bg-card border p-5 rounded-2xl">No overdue follow-ups.</p>
             ) : (
               <div className="space-y-3">
                 {overdue.map((fu) => (
@@ -77,11 +77,11 @@ export default async function FollowUpsPage() {
 
           {/* Today Section */}
           <section>
-            <h2 className="text-lg font-semibold text-blue-600 mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-serif font-semibold text-blue-600 mb-4 flex items-center gap-2">
               <Clock className="w-5 h-5" /> Today
             </h2>
             {today.length === 0 ? (
-              <p className="text-sm text-muted-foreground bg-background border p-4 rounded-lg">No follow-ups scheduled for today.</p>
+              <p className="text-sm text-muted-foreground bg-card border p-5 rounded-2xl">No follow-ups scheduled for today.</p>
             ) : (
               <div className="space-y-3">
                 {today.map((fu) => (
@@ -95,11 +95,11 @@ export default async function FollowUpsPage() {
         {/* Right Column: Upcoming */}
         <div className="space-y-8">
            <section>
-            <h2 className="text-lg font-semibold text-green-600 mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-serif font-semibold text-emerald-600 mb-4 flex items-center gap-2">
               <CalendarIcon className="w-5 h-5" /> Upcoming
             </h2>
             {upcoming.length === 0 ? (
-              <p className="text-sm text-muted-foreground bg-background border p-4 rounded-lg">No upcoming follow-ups.</p>
+              <p className="text-sm text-muted-foreground bg-card border p-5 rounded-2xl">No upcoming follow-ups.</p>
             ) : (
               <div className="space-y-3">
                 {upcoming.map((fu) => (

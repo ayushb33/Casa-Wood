@@ -32,18 +32,18 @@ export default async function LeadsPage() {
   }, {});
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full animate-in fade-in-50 duration-500">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Leads</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-3xl font-serif font-semibold tracking-tight">Leads & Enquiries</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Track customer enquiries and manage your sales pipeline.
           </p>
         </div>
         <Link
           href="/dashboard/leads/create"
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium bg-stone-900 text-stone-100 hover:bg-stone-800 h-10 px-4 py-2 shadow-sm transition-all"
         >
           + Add Lead
         </Link>
@@ -52,86 +52,88 @@ export default async function LeadsPage() {
       {/* Pipeline Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: "New", key: "NEW" },
-          { label: "Interested", key: "INTERESTED" },
-          { label: "Quotation Sent", key: "QUOTATION_SENT" },
-          { label: "Won", key: "WON" },
-        ].map(({ label, key }) => (
-          <div key={key} className="border rounded-lg bg-background p-4 shadow-sm">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">{label}</p>
-            <p className="text-3xl font-semibold mt-1">{statusCounts[key] ?? 0}</p>
+          { label: "New Enquiries", key: "NEW", border: "border-l-blue-500" },
+          { label: "Interested", key: "INTERESTED", border: "border-l-amber-500" },
+          { label: "Quotation Sent", key: "QUOTATION_SENT", border: "border-l-purple-500" },
+          { label: "Won Deals", key: "WON", border: "border-l-emerald-500" },
+        ].map(({ label, key, border }) => (
+          <div key={key} className={`border rounded-2xl bg-card p-5 shadow-sm space-y-1 border-l-4 ${border}`}>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
+            <p className="text-3xl font-serif font-semibold">{statusCounts[key] ?? 0}</p>
           </div>
         ))}
       </div>
 
       {/* Leads Table */}
-      <div className="border rounded-lg bg-background shadow-sm overflow-hidden">
-        <table className="w-full text-sm text-left">
-          <thead className="text-xs text-muted-foreground uppercase bg-muted/50 border-b">
-            <tr>
-              <th className="px-6 py-4 font-medium">Customer</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium">Source</th>
-              <th className="px-6 py-4 font-medium">Last Activity</th>
-              <th className="px-6 py-4 font-medium">Assigned To</th>
-              <th className="px-6 py-4 text-right font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leads.length === 0 ? (
+      <div className="border rounded-2xl bg-card shadow-sm overflow-hidden">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-sm text-left">
+            <thead className="text-xs text-muted-foreground uppercase bg-stone-50 border-b">
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
-                  No leads yet. Add your first customer enquiry.
-                </td>
+                <th className="px-6 py-4 font-semibold">Customer</th>
+                <th className="px-6 py-4 font-semibold">Status</th>
+                <th className="px-6 py-4 font-semibold">Source</th>
+                <th className="px-6 py-4 font-semibold">Last Activity</th>
+                <th className="px-6 py-4 font-semibold">Assigned To</th>
+                <th className="px-6 py-4 text-right font-semibold">Actions</th>
               </tr>
-            ) : (
-              leads.map((lead) => (
-                <tr
-                  key={lead.id}
-                  className="border-b last:border-0 hover:bg-muted/30 transition-colors"
-                >
-                  <td className="px-6 py-4">
-                    <p className="font-medium text-foreground">{lead.customer.name}</p>
-                    {lead.customer.phone && (
-                      <p className="text-xs text-muted-foreground">{lead.customer.phone}</p>
-                    )}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                        STATUS_BADGE[lead.status] ?? "bg-gray-100 text-gray-600"
-                      }`}
-                    >
-                      {lead.status.replace(/_/g, " ")}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {SOURCE_LABEL[lead.source] ?? lead.source}
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {lead.activities[0]
-                      ? new Date(lead.activities[0].createdAt).toLocaleDateString("en-IN", {
-                          day: "numeric",
-                          month: "short",
-                        })
-                      : "—"}
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {lead.assignedTo?.name ?? "Unassigned"}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <Link
-                      href={`/dashboard/leads/${lead.id}`}
-                      className="text-primary hover:underline text-sm font-medium"
-                    >
-                      View
-                    </Link>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {leads.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                    No leads yet. Add your first customer enquiry.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                leads.map((lead) => (
+                  <tr
+                    key={lead.id}
+                    className="hover:bg-stone-50/60 transition-colors"
+                  >
+                    <td className="px-6 py-4">
+                      <p className="font-medium text-stone-900">{lead.customer.name}</p>
+                      {lead.customer.phone && (
+                        <p className="text-xs text-muted-foreground">{lead.customer.phone}</p>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                          STATUS_BADGE[lead.status] ?? "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {lead.status.replace(/_/g, " ")}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground whitespace-nowrap">
+                      {SOURCE_LABEL[lead.source] ?? lead.source}
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground whitespace-nowrap">
+                      {lead.activities[0]
+                        ? new Date(lead.activities[0].createdAt).toLocaleDateString("en-IN", {
+                            day: "numeric",
+                            month: "short",
+                          })
+                        : "—"}
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground whitespace-nowrap">
+                      {lead.assignedTo?.name ?? "Unassigned"}
+                    </td>
+                    <td className="px-6 py-4 text-right whitespace-nowrap">
+                      <Link
+                        href={`/dashboard/leads/${lead.id}`}
+                        className="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-stone-900 text-stone-100 text-xs font-medium hover:bg-stone-800 transition-colors"
+                      >
+                        View Details
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
